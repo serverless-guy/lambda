@@ -1,5 +1,5 @@
 {
-  "name": "lambda",
+  "name": "@serverless-guy/lambda",
   "version": "0.0.1",
   "description": "serverless lambda wrapper utility",
   "main": "dist/index.js",
@@ -9,7 +9,7 @@
     "clean": "rimraf ./dist",
     "build": "npm run clean && npm run rollup"
   },
-  "types": "dist/**.d.ts",
+  "types": "dist/src/index.d.ts",
   "nyc": {
     "include": [
       "src/**/*.ts"
