@@ -1,0 +1,46 @@
+{
+  "name": "@serverless-utils/lambda",
+  "version": "0.0.1",
+  "description": "serverless lambda wrapper utility",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run build && mocha -r ts-node/register test/**/*.test.ts",
+    "rollup": "rollup -c",
+    "clean": "rimraf ./dist",
+    "build": "npm run clean && npm run rollup"
+  },
+  "types": "dist/**.d.ts",
+  "nyc": {
+    "include": [
+      "src/**/*.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ]
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.17",
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.10",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.68.1",
+    "rollup-plugin-alias": "^1.4.0",
+    "rollup-plugin-typescript": "^1.0.0",
+    "rollup-plugin-typescript2": "^0.18.1",
+    "rollup-plugin-uglify": "^4.0.0",
+    "ts-node": "^7.0.1",
+    "tslib": "^1.9.3",
+    "tslint": "^5.11.0",
+    "typescript": "^3.1.6"
+  }
+}

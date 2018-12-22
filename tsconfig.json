@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es3",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "declaration": true,
+    "sourceMap": true,
+    "baseUrl": "src",
+    "lib": [
+      "esnext"
+    ],
+    "paths": {
+      "@lambda/*": ["*"]
+    }
+  },
+  "include": [
+    "./src",
+    "./test"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
