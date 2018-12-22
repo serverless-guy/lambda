@@ -1,0 +1,8 @@
+.rpt2_cache
+.nyc_output
+.webpack
+.serverless
+coverage
+node_modules
+test-reports
+package-lock.json
