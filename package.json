@@ -1,5 +1,5 @@
 {
-  "name": "@serverless-utils/lambda",
+  "name": "lambda",
   "version": "0.0.1",
   "description": "serverless lambda wrapper utility",
   "main": "dist/index.js",
@@ -22,7 +22,7 @@
     ]
   },
   "keywords": [],
-  "author": "",
+  "author": "yakovmeister <so@tfwno.gf>",
   "license": "ISC",
   "devDependencies": {
     "@types/aws-lambda": "^8.10.17",
@@ -42,5 +42,17 @@
     "tslib": "^1.9.3",
     "tslint": "^5.11.0",
     "typescript": "^3.1.6"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/serverless-guy/lambda.git"
+  },
+  "bugs": {
+    "url": "https://github.com/serverless-guy/lambda/issues"
+  },
+  "homepage": "https://github.com/serverless-guy/lambda#readme"
 }
