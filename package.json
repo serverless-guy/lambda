@@ -2,7 +2,7 @@
   "name": "@serverless-utils/lambda",
   "version": "0.0.1",
   "description": "serverless lambda wrapper utility",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "npm run build && mocha -r ts-node/register test/**/*.test.ts",
     "rollup": "rollup -c",
