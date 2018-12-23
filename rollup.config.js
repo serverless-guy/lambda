@@ -13,12 +13,15 @@ const base = {
 }
 
 export default [
-  {
-    ...base,
-    input: "src/index.ts",
-    output: {
-      format: 'cjs',
-      file: "dist/index.js"
+  Object.assign(
+    {},
+    base,
+    {
+      input: "src/index.ts",
+      output: {
+        format: 'cjs',
+        file: "dist/index.js"
+      }
     }
-  }
+  )
 ]
