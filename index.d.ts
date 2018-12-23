@@ -1,0 +1,35 @@
+
+import { APIGatewayEvent, Context } from "aws-lambda";
+
+export declare type Handler = (event?: APIGatewayEvent, context?: Context, res?: any) => any;
+export declare function resolver(event: APIGatewayEvent, context: Context, lambdaHandler: Handler, preprocessAction: any): any;
+
+/**
+ * Append Data to a valid lambda response object
+ * @param data response body
+ * @param statusCode status code
+ * @param additionalOptions additional lambda response property
+ * @return Object
+ */
+export declare function responser(data: any, statusCode?: number, additionalOptions?: {}): {
+    body: string;
+    headers: {
+        "Access-Control-Allow-Origin": string;
+    };
+    statusCode: number;
+};
+
+/**
+ * Chain function via Promise
+ * @param functions functions to be executed
+ * @return Promise
+ */
+export declare function chain(...functions: any[]): any;
+
+/**
+ * Wraps lambda function to skip ugly things
+ * @param func lambda function
+ * @param preprocessAction what lambda should do before executing the other logic
+ * @param errorHandler customized error handler
+ */
+export declare function lambdaWrap(func: any, preprocessAction?: any, errorHandler?: any): (event: any, context: any) => any;

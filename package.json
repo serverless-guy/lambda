@@ -9,7 +9,7 @@
     "clean": "rimraf ./dist",
     "build": "npm run clean && npm run rollup"
   },
-  "types": "dist/src/index.d.ts",
+  "types": "index.d.ts",
   "nyc": {
     "include": [
       "src/**/*.ts"
