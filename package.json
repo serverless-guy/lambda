@@ -1,6 +1,6 @@
 {
   "name": "@serverless-guy/lambda",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "serverless lambda wrapper utility",
   "main": "dist/index.js",
   "scripts": {
@@ -23,7 +23,7 @@
   },
   "keywords": [],
   "author": "yakovmeister <so@tfwno.gf>",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/aws-lambda": "^8.10.17",
     "@types/chai": "^4.1.7",

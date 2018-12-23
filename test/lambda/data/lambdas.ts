@@ -1,5 +1,14 @@
 import { responser } from "../../../dist"
 
+/**  */
+function promiseFunc() {
+  return new Promise((resolve, reject) => {
+    return resolve({
+      hello: "world"
+    })
+  })
+}
+/** */
 export function lambdaFunctionWithSuccessResponse(event, response) {
   return response({ hello: "world" })
 }
@@ -26,6 +35,12 @@ export function lambdaFunctionWithPromiseResponseFunctionNotUsed(event) {
   return Promise.resolve({
     hello: "world"
   })
+}
+
+export async function lambdaUsingAsync(event) {
+  const response = await promiseFunc()
+
+  return response
 }
 
 export function lambdaWrapErrorHandler(event, error) {
