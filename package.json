@@ -1,6 +1,6 @@
 {
   "name": "@serverless-guy/lambda",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "serverless lambda wrapper utility",
   "main": "dist/index.js",
   "scripts": {
