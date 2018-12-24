@@ -31,6 +31,10 @@ export function lambdaFunctionWithPromise(event, response) {
   }))
 }
 
+export function lambdaReturnEvents(event, response) {
+  return Promise.resolve(response(event))
+}
+
 export function lambdaFunctionWithPromiseResponseFunctionNotUsed(event) {
   return Promise.resolve({
     hello: "world"

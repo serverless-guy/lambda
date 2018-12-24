@@ -77,6 +77,8 @@ function beforeMiddleware(event, context) {
    })
 }
 
+function emptyErrorHandler() {}
+
 /**
  * A lambda function that returns details about the user after its creation
  * @param event APIGatewayEvent
@@ -97,12 +99,12 @@ function lambdaFunction(event, response) {
 /**
  * handler
  */
-export const handler = lambdaWrap(lambdaFunction, beforeMiddleware)
+export const handler = lambdaWrap(lambdaFunction, emptyErrorHandler, beforeMiddleware)
 ```  
   
 ## Error handling  
   
-You can pass your own error handler as third argument of the `lambdaWrap` function  
+You can pass your own error handler as second argument of the `lambdaWrap` function  
   
 ```javascript
 import { lambdaWrap, responser } from "@serverless-guy/lambda"
@@ -153,7 +155,7 @@ function lambdaFunction(event, response) {
 /**
  * handler
  */
-export const handler = lambdaWrap(lambdaFunction, beforeMiddleware, errorHandler)
+export const handler = lambdaWrap(lambdaFunction, errorHandler, beforeMiddleware)
 ```  
   
 # Contributing

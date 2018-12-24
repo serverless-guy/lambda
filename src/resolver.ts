@@ -1,16 +1,31 @@
 import { chain } from "@lambda/chain"
 import { APIGatewayEvent, Context } from "aws-lambda"
 
-export type Handler = (event?: APIGatewayEvent, context?: Context, res?: any) => any
+interface IResponseFuncResponse {
+  body?: string,
+  headers?: any,
+  statusCode?: number,
+  isBase64Encoded?: boolean
+}
 
-export function resolver(event: APIGatewayEvent, context: Context, lambdaHandler: Handler, preprocessAction: any): any {
+export type ResponseFunc = (data: any, statusCode?: number, additionalOptions?: any) => IResponseFuncResponse
+
+export type HandlerFunc = (event?: APIGatewayEvent, responser?: ResponseFunc) => any
+
+export type ErrorFunc = (event?: APIGatewayEvent, error?: any) => any
+
+export function resolver(event: APIGatewayEvent, context: Context, lambdaHandler: HandlerFunc, ...preprocessActions): any {
   return new Promise((resolve, reject) => {
-    if (!preprocessAction) {
+    if (!preprocessActions) {
       return resolve(handleLambdaHandler(event, lambdaHandler, responser))
     }
 
+    const preProcesses = preprocessActions.map((preprocessAction) => {
+      return preprocessAction(event, context)
+    })
+
     return chain(
-      preprocessAction(event, context),
+      ...preProcesses,
       handleLambdaHandler(event, lambdaHandler, responser)
     ).then(resolve).catch(reject)
   })

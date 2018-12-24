@@ -3,6 +3,11 @@ export const resolver200response = {
   headers: { "Access-Control-Allow-Origin": "*" },
   statusCode: 200
 }
+export const resolver200responseEvent = {
+  body: "{\"body\":\"{hello:\\\"world\\\"}\",\"queryStringParameters\":{\"q\":\"samplekeyword\"}}",
+  headers: { "Access-Control-Allow-Origin": "*" },
+  statusCode: 200
+}
 
 export const resolver400response = {
   body: JSON.stringify({ error: "invalid input" }),
