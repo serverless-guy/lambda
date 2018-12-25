@@ -124,6 +124,60 @@ function beforeMiddleware(event, context) {
 }
 
 /**
+ * Throws 500 every time it receives an error
+ * @param event APIGatewayEvent
+ * @param error Error
+ */
+function errorHandler(event, error) {
+  return responser({
+    message: error.message,
+    code: error.name
+  }, 500)
+}
+
+/**
+ * A lambda function that returns details about the user after its creation
+ * @param event APIGatewayEvent
+ * @param response responseFunction
+ */
+function lambdaFunction(event, response) {
+  const requestBody = JSON.parse(event.body)
+
+  /** DynamoWrapper is an imaginary dynamo db wrapper **/
+  const data = DynamoWrapper.create(requestBody)
+
+  /** here we return data together with 201 status code **/
+  return data.then((created) => response({
+    ...created
+  }, 201))
+}
+
+/**
+ * handler
+ */
+export const handler = lambdaWrapper(lambdaFunction, errorHandler, beforeMiddleware)
+```  
+  
+## Multiple preprocess actions  
+  
+```javascript
+import { lambdaWrapper, responser } from "@serverless-guy/lambda"
+
+/**
+ * only preprocess action has access to context
+ * which makes it suitable for logging everything you need before
+ * executing your actual lambda function
+ * @param event APIGatewayEvent
+ * @param context Context
+ */
+function beforeMiddleware(event, context) {
+   console.log({
+    pathParams:  event.pathParameters,
+    queryString: event.queryStringParameters
+   })
+}
+
+/**
  * validate input before the actual lambda function is executed
  * @param event APIGatewayEvent
  * @param context Context
@@ -164,7 +218,6 @@ function lambdaFunction(event, response) {
   return data.then((created) => response({
     ...created
   }, 201))
-}
 
 /**
  * handler
@@ -175,59 +228,6 @@ export const handler = lambdaWrapper(
   beforeMiddleware,
   secondBeforeMiddleware
 )
-```  
-  
-## Multiple preprocess actions  
-  
-```javascript
-import { lambdaWrapper, responser } from "@serverless-guy/lambda"
-
-/**
- * only preprocess action has access to context
- * which makes it suitable for logging everything you need before
- * executing your actual lambda function
- * @param event APIGatewayEvent
- * @param context Context
- */
-function beforeMiddleware(event, context) {
-   console.log({
-    pathParams:  event.pathParameters,
-    queryString: event.queryStringParameters
-   })
-}
-
-/**
- * Throws 500 every time it receives an error
- * @param event APIGatewayEvent
- * @param error Error
- */
-function errorHandler(event, error) {
-  return responser({
-    message: error.message,
-    code: error.name
-  }, 500)
-}
-
-/**
- * A lambda function that returns details about the user after its creation
- * @param event APIGatewayEvent
- * @param response responseFunction
- */
-function lambdaFunction(event, response) {
-  const requestBody = JSON.parse(event.body)
-
-  /** DynamoWrapper is an imaginary dynamo db wrapper **/
-  const data = DynamoWrapper.create(requestBody)
-
-  /** here we return data together with 201 status code **/
-  return data.then((created) => response({
-    ...created
-  }, 201))
-
-/**
- * handler
- */
-export const handler = lambdaWrapper(lambdaFunction, errorHandler, beforeMiddleware)
 ```  
   
 # Contributing
