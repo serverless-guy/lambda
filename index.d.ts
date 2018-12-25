@@ -4,7 +4,7 @@ import { APIGatewayEvent, Context } from "aws-lambda";
 export declare type ErrorFunc = (event?: APIGatewayEvent, error?: any) => any
 export declare type HandlerFunc = (event?: APIGatewayEvent, responser?: ResponseFunc) => any
 export declare type ResponseFunc = (data: any, statusCode?: number, additionalOptions?: any) => IResponseFuncResponse
-export declare function resolver(event: APIGatewayEvent, context: Context, lambdaHandler: Handler, preprocessAction: any): any;
+export declare function resolver(event: APIGatewayEvent, context: Context, lambdaHandler: HandlerFunc, preprocessAction: any): any;
 export declare interface IResponseFuncResponse {
   body?: string,
   headers?: any,
@@ -40,4 +40,4 @@ export declare function chain(...functions: any[]): any;
  * @param preprocessAction what lambda should do before executing the other logic
  * @param errorHandler customized error handler
  */
-export declare function lambdaWrap(func: any, preprocessAction?: any, errorHandler?: any): (event: any, context: any) => any;
+export declare function lambdaWrapper(func: any, preprocessAction?: any, errorHandler?: any): (event: any, context: any) => any;
