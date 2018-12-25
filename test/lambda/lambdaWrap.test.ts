@@ -1,6 +1,6 @@
 import { expect } from "chai"
-import { lambdaWrap } from "../../dist"
-import { invalidInputLambda, lambdaFunctionWithPromise, lambdaWrapErrorHandler, lambdaUsingAsync, lambdaReturnEvents } from "./data/lambdas"
+import { lambdaWrapper } from "../../dist"
+import { invalidInputLambda, lambdaFunctionWithPromise, lambdaWrapperErrorHandler, lambdaUsingAsync, lambdaReturnEvents } from "./data/lambdas"
 import { resolver200response, resolver200responseEvent, resolver400response } from "./data/expected"
 
 function noop(event, context) {
@@ -13,31 +13,31 @@ function noop2(event) {
 
 describe("Utility: Lambda Wrapper", () => {
   it("should resolve lambda error function", async () => {
-    const resolveHandler = await lambdaWrap(invalidInputLambda, lambdaWrapErrorHandler, noop)({}, {})
+    const resolveHandler = await lambdaWrapper(invalidInputLambda, lambdaWrapperErrorHandler, noop)({}, {})
 
     expect(resolveHandler).to.deep.equal(resolver400response)
   })
 
   it("should resolve lambda", async () => {
-    const resolveHandler = await lambdaWrap(lambdaFunctionWithPromise, lambdaWrapErrorHandler, noop)({}, {})
+    const resolveHandler = await lambdaWrapper(lambdaFunctionWithPromise, lambdaWrapperErrorHandler, noop)({}, {})
 
     expect(resolveHandler).to.deep.equal(resolver200response)
   })
 
   it("should resolve lambda (multiple preprocess actions)", async () => {
-    const resolveHandler = await lambdaWrap(lambdaReturnEvents, lambdaWrapErrorHandler, noop, noop2)({}, {})
+    const resolveHandler = await lambdaWrapper(lambdaReturnEvents, lambdaWrapperErrorHandler, noop, noop2)({}, {})
 
     expect(resolveHandler).to.deep.equal(resolver200responseEvent)
   })
 
   it("should resolve lambda (no error handler)", async () => {
-    const resolveHandler = await lambdaWrap(lambdaFunctionWithPromise)({}, {})
+    const resolveHandler = await lambdaWrapper(lambdaFunctionWithPromise)({}, {})
 
     expect(resolveHandler).to.deep.equal(resolver200response)
   })
 
   it("should resolve lambda (async)", async () => {
-    const resolveHandler = await lambdaWrap(lambdaUsingAsync)({}, {})
+    const resolveHandler = await lambdaWrapper(lambdaUsingAsync)({}, {})
 
     expect(resolveHandler).to.deep.equal(resolver200response)
   })

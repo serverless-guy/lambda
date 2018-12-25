@@ -1,8 +1,8 @@
-import { lambdaWrap } from "@lambda/lambdaWrap"
+import { lambdaWrapper } from "@lambda/lambdaWrap"
 import { resolver, responser } from "@lambda/resolver"
 
 export {
-  lambdaWrap,
+  lambdaWrapper,
   responser,
   resolver
 }

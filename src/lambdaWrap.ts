@@ -6,7 +6,7 @@ import { resolver, HandlerFunc, ErrorFunc } from "@lambda/resolver"
  * @param errorHandler customized error handler
  * @param preprocessActions what lambda should do before executing the other logic
  */
-export function lambdaWrap(func: HandlerFunc, errorHandler?: ErrorFunc, ...preprocessActions) {
+export function lambdaWrapper(func: HandlerFunc, errorHandler?: ErrorFunc, ...preprocessActions) {
   return (event, context) =>  {
     let response = resolver(event, context, func, ...preprocessActions)
 

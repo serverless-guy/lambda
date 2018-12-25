@@ -47,7 +47,7 @@ export async function lambdaUsingAsync(event) {
   return response
 }
 
-export function lambdaWrapErrorHandler(event, error) {
+export function lambdaWrapperErrorHandler(event, error) {
   return responser({
     error: error.message
   }, 400)
