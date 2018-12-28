@@ -38,7 +38,7 @@ export function resolver(event: APIGatewayEvent, context: Context, lambdaHandler
  * @param response response function
  * @return func
  */
-function handleLambdaHandler(event, lambdaHandler, response) {
+function handleLambdaHandler(event: APIGatewayEvent, lambdaHandler: HandlerFunc, response: ResponseFunc) {
   const handler = lambdaHandler(event, response)
 
   if (!handler.then) {
@@ -53,7 +53,7 @@ function handleLambdaHandler(event, lambdaHandler, response) {
  * @param response response body
  * @return Object
  */
-function validLambdaResponseObject(response) {
+function validLambdaResponseObject(response: any) {
   const hasBody       = response.hasOwnProperty("body")
   const hasHeaders    = response.hasOwnProperty("headers")
   const hasStatusCode = response.hasOwnProperty("statusCode")
@@ -67,7 +67,7 @@ function validLambdaResponseObject(response) {
  * @param response response body
  * @return Object
  */
-function wrapResponse(response) {
+function wrapResponse(response: any) {
   if (!validLambdaResponseObject(response)) {
     return {
       body: JSON.stringify(response),
@@ -88,7 +88,7 @@ function wrapResponse(response) {
  * @param additionalOptions additional lambda response property
  * @return Object
  */
-export function responser(data, statusCode = 200, additionalOptions = {}) {
+export function responser(data: any, statusCode = 200, additionalOptions = {}) {
   return {
     body: JSON.stringify(data),
     headers: {
