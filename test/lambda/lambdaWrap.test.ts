@@ -1,7 +1,7 @@
 import { expect } from "chai"
 import { lambdaWrapper } from "../../dist"
 import { invalidInputLambda, lambdaFunctionWithPromise, lambdaWrapperErrorHandler, lambdaUsingAsync, lambdaReturnEvents } from "./data/lambdas"
-import { resolver200response, resolver200responseEvent, resolver400response } from "./data/expected"
+import { resolver200response, resolver200responseEvent, resolver400response, resolver500response } from "./data/expected"
 
 function noop(event, context) {
   event.body = "{hello:\"world\"}"
@@ -40,5 +40,17 @@ describe("Utility: Lambda Wrapper", () => {
     const resolveHandler = await lambdaWrapper(lambdaUsingAsync)({}, {})
 
     expect(resolveHandler).to.deep.equal(resolver200response)
+  })
+
+  it("should catch and response", async () => {
+    const resolveHandler = await lambdaWrapper(invalidInputLambda, undefined)({}, {})
+
+    expect(resolveHandler).to.deep.equal(resolver500response)
+  })
+
+  it("should catch and response (with preprocess functions)", async () => {
+    const resolveHandler = await lambdaWrapper(invalidInputLambda, undefined, noop, noop2)({}, {})
+
+    expect(resolveHandler).to.deep.equal(resolver500response)
   })
 })

@@ -1,5 +1,5 @@
 import { defaultErrorFunc } from "@lambda/defaultErrorFunc"
-import { lambdaWrapper } from "@lambda/lambdaWrap"
+import { lambdaWrapper } from "@lambda/lambdaWrapper"
 import { resolver, responser } from "@lambda/resolver"
 
 export {

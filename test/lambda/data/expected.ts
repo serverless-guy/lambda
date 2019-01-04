@@ -14,3 +14,9 @@ export const resolver400response = {
   headers: { "Access-Control-Allow-Origin": "*" },
   statusCode: 400
 }
+
+export const resolver500response = {
+  body: JSON.stringify({ errorCode: "Error", errorMessage: "invalid input" }),
+  headers: { "Access-Control-Allow-Origin": "*" },
+  statusCode: 500
+}
