@@ -1,4 +1,5 @@
 import { resolver, HandlerFunc, ErrorFunc } from "@lambda/resolver"
+import { defaultErrorFunc } from "@lambda/defaultErrorFunc"
 
 /**
  * Wraps lambda function to skip ugly things
@@ -10,10 +11,10 @@ export function lambdaWrapper(func: HandlerFunc, errorHandler?: ErrorFunc, ...pr
   return (event, context) =>  {
     let response = resolver(event, context, func, ...preprocessActions)
 
-    if (errorHandler) {
-      response = response.catch((error) => errorHandler(event, error))
+    if (!errorHandler) {
+      errorHandler = defaultErrorFunc
     }
 
-    return response
+    return response.catch((error) => errorHandler(event, error))
   }
 }

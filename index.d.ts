@@ -1,9 +1,11 @@
 
 import { APIGatewayEvent, Context } from "aws-lambda";
 
+
 export declare type ErrorFunc = (event?: APIGatewayEvent, error?: any) => any
 export declare type HandlerFunc = (event?: APIGatewayEvent, responser?: ResponseFunc) => any
 export declare type ResponseFunc = (data: any, statusCode?: number, additionalOptions?: any) => IResponseFuncResponse
+export declare function defaultErrorFunc(event: APIGatewayEvent, error: any): IResponseFuncResponse;
 export declare function resolver(event: APIGatewayEvent, context: Context, lambdaHandler: HandlerFunc, ...preprocessActions): any;
 export declare interface IResponseFuncResponse {
   body?: string,

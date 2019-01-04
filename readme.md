@@ -77,8 +77,6 @@ function beforeMiddleware(event, context) {
    })
 }
 
-function emptyErrorHandler() {}
-
 /**
  * A lambda function that returns details about the user after its creation
  * @param event APIGatewayEvent
@@ -99,12 +97,12 @@ function lambdaFunction(event, response) {
 /**
  * handler
  */
-export const handler = lambdaWrapper(lambdaFunction, emptyErrorHandler, beforeMiddleware)
+export const handler = lambdaWrapper(lambdaFunction, undefined, beforeMiddleware)
 ```  
   
 ## Error handling  
   
-You can pass your own error handler as second argument of the `lambdaWrapper` function  
+By default, there's an error handler already included (but returns 500 status only), You may pass your own error handler as second argument of the `lambdaWrapper` function  
   
 ```javascript
 import { lambdaWrapper, responser } from "@serverless-guy/lambda"
