@@ -228,6 +228,9 @@ export const handler = lambdaWrapper(
 )
 ```  
   
+# Example  
+  
+[@serverless-guy/app-example](https://github.com/serverless-guy/app-example) contains good example how `@serverless-guy/lambda` is used. Feel free to check it out.
 # Contributing
   
 1. Fork it ([https://github.com/serverless-guy/lambda/fork](https://github.com/serverless-guy/lambda/fork))  
