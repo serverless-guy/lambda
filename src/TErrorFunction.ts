@@ -1,0 +1,1 @@
+export type TErrorFunction = (event?: any, error?: any) => any

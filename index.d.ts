@@ -1,17 +1,19 @@
 
 import { APIGatewayEvent, Context } from "aws-lambda";
 
-export declare type ErrorFunc = (event?: APIGatewayEvent, error?: any) => any
-export declare type HandlerFunc = (event?: APIGatewayEvent, responser?: ResponseFunc) => any
-export declare type ResponseFunc = (data: any, statusCode?: number, additionalOptions?: any) => IResponseFuncResponse
-export declare function defaultErrorFunc(event: APIGatewayEvent, error: any): IResponseFuncResponse;
-export declare function resolver(event: APIGatewayEvent, context: Context, lambdaHandler: HandlerFunc, ...preprocessActions): any;
-export declare interface IResponseFuncResponse {
+export interface IResponseFunctionResponse {
   body?: string,
   headers?: any,
   statusCode?: number,
   isBase64Encoded?: boolean
 }
+
+export declare type TErrorFunction = (event?: APIGatewayEvent, error?: any) => any
+export declare type THandlerFunction = (event?: APIGatewayEvent, responser?: TResponseFunction) => any
+export declare type TResponseFunction = (data: any, statusCode?: number, additionalOptions?: any) => IResponseFunctionResponse
+export declare function defaultErrorFunc(event: APIGatewayEvent, error: Error): IResponseFunctionResponse;
+export declare function resolver(event: APIGatewayEvent, context: Context, func: THandlerFunction, ...middlewares): any;
+export declare function resolverNonHttp(event: APIGatewayEvent, context: Context, func: THandlerFunction, ...middlewares): any;
 
 /**
  * Append Data to a valid lambda response object
@@ -21,24 +23,26 @@ export declare interface IResponseFuncResponse {
  * @return Object
  */
 export declare function responser(data: any, statusCode?: number, additionalOptions?: {}): {
-    body: string;
-    headers: {
-        "Access-Control-Allow-Origin": string;
-    };
-    statusCode: number;
+  body: string;
+  headers: {
+    "Access-Control-Allow-Origin": string;
+  };
+  statusCode: number;
 };
-
-/**
- * Chain function via Promise
- * @param functions functions to be executed
- * @return Promise
- */
-export declare function chain(...functions: any[]): any;
 
 /**
  * Wraps lambda function to skip ugly things
  * @param func lambda function
- * @param preprocessAction what lambda should do before executing the other logic
  * @param errorHandler customized error handler
+ * @param middlewares what lambda should do before executing the other logic
  */
-export declare function lambdaWrapper(func: any, errorHandler?: ErrorFunc, ...preprocessActions): (event: APIGatewayEvent, context: Context) => any;
+export declare function wrapper(func: THandlerFunction, errorHandler?: TErrorFunction, ...preprocessActions): lambdaFunc;
+
+/**
+ * Wraps lambda function to skip ugly things (Non-HTTP)
+ * @param func lambda function
+ * @param errorHandler customized error handler
+ * @param middlewares what lambda should do before executing the other logic
+ */
+export declare function wrapperNonHttp(func: THandlerFunction, errorHandler?: TErrorFunction, ...preprocessActions): lambdaFunc;
+export declare type lambdaFunc = (event: APIGatewayEvent, context: Context) => any;

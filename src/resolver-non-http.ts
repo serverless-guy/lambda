@@ -1,9 +1,7 @@
 import { middlewareHandler } from "@lambda/middlewareHandler"
 
-export async function resolverNonHttp(event, context, func, ...middlewares) {
-  await new Promise((resolve) => resolve(
+export function resolverNonHttp(event, context, func, ...middlewares) {
+  return new Promise((resolve) => resolve(
     middlewareHandler(event, context, ...middlewares)
-  ))
-
-  return func(event)
+  )).then(() => func(event))
 }

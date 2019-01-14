@@ -22,7 +22,7 @@ describe("HTTP Wrapper", () => {
 
     const resolved = await resolver(eventSample, contextSample, httpLambdaProcessParsedBody, bodyParserMiddleware)
 
-    expect(resolved).to.have.haveOwnProperty("body")
+    expect(resolved).to.haveOwnProperty("body")
     expect(JSON.parse(resolved.body).myName).to.equal("John Doe")
     expect(resolved).to.haveOwnProperty("statusCode")
     expect(resolved.statusCode).to.equal(200)
