@@ -1,5 +1,5 @@
 import { APIGatewayEvent } from "aws-lambda"
-import { responser } from "@lambda/resolver"
+import { responser } from "@lambda/responser"
 
 /**
  * Default error responser
@@ -7,7 +7,7 @@ import { responser } from "@lambda/resolver"
  * @param error any
  * @return IResponseFuncResponse
  */
-export function defaultErrorFunc(event: APIGatewayEvent, error: any) {
+export function defaultErrorHandler(event: APIGatewayEvent, error: Error) {
   return responser({
     errorCode: error.name,
     errorMessage: error.message

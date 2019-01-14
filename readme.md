@@ -105,7 +105,7 @@ export const handler = lambdaWrapper(lambdaFunction, undefined, beforeMiddleware
 By default, there's an error handler already included (but returns 500 status only), You may pass your own error handler as second argument of the `lambdaWrapper` function  
   
 ```javascript
-import { lambdaWrapper, responser } from "@serverless-guy/lambda"
+import { lambdaWrapper, httpResponser as responser } from "@serverless-guy/lambda"
 
 /**
  * only preprocess action has access to context
