@@ -4,7 +4,7 @@ import { lambdaFuncEmptyResponse } from "../data/lambdaFuncEmptyResponse"
 import { lambdaFuncResponseBody } from "../data/lambdaFuncResponseBody"
 import { changeNameMiddleware } from "../data/changeNameMiddleware"
 
-describe("Non HTTP Wrapper", () => {
+describe("Non HTTP Resolver", () => {
   it("should resolve Non HTTP Lambda as undefined", async () => {
     const eventSample = require("../data/non-http-event.json")
     const contextSample = require("../data/context.json")

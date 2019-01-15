@@ -15,16 +15,16 @@ npm i --save @serverless-guy/lambda
   
 # Usage  
   
-## Wrapping your lambda functions  
+## Wrapping your HTTP lambda functions  
   
 ```javascript
-import { lambdaWrapper } from "@serverless-guy/lambda"
+import { wrapper } from "@serverless-guy/lambda"
 
 /**
  * A lambda function that returns details about the user
  * @param event APIGatewayEvent
  */
-export const handler = lambdaWrapper(function(event) {
+export const handler = wrapper(function(event) {
   const requestBody = JSON.parse(event.body)
 
   /** DynamoWrapper is an imaginary dynamo db wrapper **/
@@ -37,13 +37,13 @@ export const handler = lambdaWrapper(function(event) {
 It is also possible to control the status code using this utility.  
   
 ```javascript
-import { lambdaWrapper } from "@serverless-guy/lambda"
+import { wrapper } from "@serverless-guy/lambda"
 
 /**
  * A lambda function that returns details about the user after its creation
  * @param event APIGatewayEvent
  */
-export const handler = lambdaWrapper(function(event, response) {
+export const handler = wrapper(function(event, response) {
   const requestBody = JSON.parse(event.body)
 
   /** DynamoWrapper is an imaginary dynamo db wrapper **/
@@ -57,24 +57,27 @@ export const handler = lambdaWrapper(function(event, response) {
 
 ```  
   
-## Preprocess Action (Middleware)  
+## Middlewares (supports "before" middleware only... for now)  
   
-This function acts almost similarly as before middleware, basically everything that is written here is executed before your actual lambda function.
 ```javascript
-import { lambdaWrapper } from "@serverless-guy/lambda"
+import { wrapper } from "@serverless-guy/lambda"
 
 /**
  * only preprocess action has access to context
  * which makes it suitable for logging everything you need before
  * executing your actual lambda function
- * @param event APIGatewayEvent
- * @param context Context
+ * @param request Object
+ * @param request.event APIGatewayEvent
+ * @param request.context Context
+ * @param next function that calls next middleware
  */
-function beforeMiddleware(event, context) {
+function beforeMiddleware(request, next) {
    console.log({
-    pathParams:  event.pathParameters,
-    queryString: event.queryStringParameters
+    pathParams:  request.event.pathParameters,
+    queryString: request.event.queryStringParameters
    })
+
+   return next()
 }
 
 /**
@@ -97,7 +100,7 @@ function lambdaFunction(event, response) {
 /**
  * handler
  */
-export const handler = lambdaWrapper(lambdaFunction, undefined, beforeMiddleware)
+export const handler = wrapper(lambdaFunction, undefined, beforeMiddleware)
 ```  
   
 ## Error handling  
@@ -105,7 +108,7 @@ export const handler = lambdaWrapper(lambdaFunction, undefined, beforeMiddleware
 By default, there's an error handler already included (but returns 500 status only), You may pass your own error handler as second argument of the `lambdaWrapper` function  
   
 ```javascript
-import { lambdaWrapper, httpResponser as responser } from "@serverless-guy/lambda"
+import { wrapper, responser } from "@serverless-guy/lambda"
 
 /**
  * only preprocess action has access to context
@@ -114,11 +117,13 @@ import { lambdaWrapper, httpResponser as responser } from "@serverless-guy/lambd
  * @param event APIGatewayEvent
  * @param context Context
  */
-function beforeMiddleware(event, context) {
+function beforeMiddleware(request, next) {
    console.log({
-    pathParams:  event.pathParameters,
-    queryString: event.queryStringParameters
+    pathParams:  request.event.pathParameters,
+    queryString: request.event.queryStringParameters
    })
+
+   return next()
 }
 
 /**
@@ -153,13 +158,13 @@ function lambdaFunction(event, response) {
 /**
  * handler
  */
-export const handler = lambdaWrapper(lambdaFunction, errorHandler, beforeMiddleware)
+export const handler = wrapper(lambdaFunction, errorHandler, beforeMiddleware)
 ```  
   
-## Multiple preprocess actions  
+## Multiple before middlewares  
   
 ```javascript
-import { lambdaWrapper, responser } from "@serverless-guy/lambda"
+import { wrapper, responser } from "@serverless-guy/lambda"
 
 /**
  * only preprocess action has access to context
@@ -168,11 +173,13 @@ import { lambdaWrapper, responser } from "@serverless-guy/lambda"
  * @param event APIGatewayEvent
  * @param context Context
  */
-function beforeMiddleware(event, context) {
+function beforeMiddleware(request, next) {
    console.log({
-    pathParams:  event.pathParameters,
-    queryString: event.queryStringParameters
+    pathParams:  request.event.pathParameters,
+    queryString: request.event.queryStringParameters
    })
+
+   return next()
 }
 
 /**
@@ -180,13 +187,15 @@ function beforeMiddleware(event, context) {
  * @param event APIGatewayEvent
  * @param context Context
  */
-function secondBeforeMiddleware(event, context) {
-  const requestBody = JSON.parse(event.body)
+function secondBeforeMiddleware(request, next) {
+  const requestBody = JSON.parse(request.event.body)
   const validation = validator(requestBody)
 
   if (validation.fails()) {
     throw new Error("Failed")
   }
+
+  return next()
 }
 
 /**
@@ -220,12 +229,30 @@ function lambdaFunction(event, response) {
 /**
  * handler
  */
-export const handler = lambdaWrapper(
+export const handler = wrapper(
   lambdaFunction,
   errorHandler,
   beforeMiddleware,
   secondBeforeMiddleware
 )
+```  
+  
+# Non-HTTP Lambdas  
+  
+Current version now supports non-http lambda
+```javascript
+import { wrapperNonHttp } from "@serverless-guy/lambda"
+
+/**
+ * A lambda function that returns details about the user after its creation
+ * @param event APIGatewayEvent
+ */
+export const handler = wrapperNonHttp(function(event) {
+  const requestBody = JSON.parse(event.body)
+
+  return DynamoWrapper.create(requestBody)
+})
+
 ```  
   
 # Example  

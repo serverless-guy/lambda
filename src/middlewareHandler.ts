@@ -12,7 +12,13 @@ export function middlewareHandler(event: any, context: any, ...middlewares) {
     return undefined
   }
 
-  return middlewares.reduce((accumulator, current) => {
+  const executedReturnsFunc = middlewares.reduce((accumulator, current) => {
     return accumulator({ event, context }, () => current)
-  })({ event, context }, () => noop)
+  })
+
+  if (!executedReturnsFunc) {
+    return executedReturnsFunc
+  }
+
+  return executedReturnsFunc({ event, context }, () => noop)
 }
