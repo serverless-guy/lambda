@@ -46,7 +46,7 @@
     "rollup-plugin-uglify": "^4.0.0",
     "ts-node": "^7.0.1",
     "tslib": "^1.9.3",
-    "tslint": "^5.12.0",
+    "tslint": "^5.12.1",
     "typescript": "^3.2.2"
   },
   "directories": {
