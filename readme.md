@@ -4,6 +4,10 @@
 [![Downloads Stats][npm-downloads]][npm-url]  
   
 Just another serverless AWS lambda utility library  
+# NOTE:  
+  
+Version 2 is still unstable, and may change in the future. Use at your own risk.  
+It's recommended to currently use the [1.x](https://www.npmjs.com/package/@serverless-guy/lambda/v/1.3.3) version.  
   
 # Installation  
   
