@@ -47,7 +47,7 @@ import { wrapper } from "@serverless-guy/lambda"
  * A lambda function that returns details about the user after its creation
  * @param event APIGatewayEvent
  */
-export const handler = wrapper(function(event, response) {
+export const handler = wrapper(function(event, context, response) {
   const requestBody = JSON.parse(event.body)
 
   /** DynamoWrapper is an imaginary dynamo db wrapper **/
@@ -89,7 +89,7 @@ function beforeMiddleware(request, next) {
  * @param event APIGatewayEvent
  * @param response responseFunction
  */
-function lambdaFunction(event, response) {
+function lambdaFunction(event, context, response) {
   const requestBody = JSON.parse(event.body)
 
   /** DynamoWrapper is an imaginary dynamo db wrapper **/
@@ -135,7 +135,7 @@ function beforeMiddleware(request, next) {
  * @param event APIGatewayEvent
  * @param error Error
  */
-function errorHandler(event, error) {
+function errorHandler(event, context, error) {
   return responser({
     message: error.message,
     code: error.name
@@ -147,7 +147,7 @@ function errorHandler(event, error) {
  * @param event APIGatewayEvent
  * @param response responseFunction
  */
-function lambdaFunction(event, response) {
+function lambdaFunction(event, context, response) {
   const requestBody = JSON.parse(event.body)
 
   /** DynamoWrapper is an imaginary dynamo db wrapper **/
@@ -207,7 +207,7 @@ function secondBeforeMiddleware(request, next) {
  * @param event APIGatewayEvent
  * @param error Error
  */
-function errorHandler(event, error) {
+function errorHandler(event, context, error) {
   return responser({
     message: error.message,
     code: error.name
@@ -219,7 +219,7 @@ function errorHandler(event, error) {
  * @param event APIGatewayEvent
  * @param response responseFunction
  */
-function lambdaFunction(event, response) {
+function lambdaFunction(event, context, response) {
   const requestBody = JSON.parse(event.body)
 
   /** DynamoWrapper is an imaginary dynamo db wrapper **/

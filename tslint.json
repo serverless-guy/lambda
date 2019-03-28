@@ -1,0 +1,57 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended",
+    "tslint-config-security"
+  ],
+  "jsRules": {
+    "quotemark": false,
+    "object-literal-sort-keys": false,
+    "one-line": [
+      true,
+      "check-catch",
+      "check-finally",
+      "check-open-brace",
+      "check-whitespace"
+    ]
+  },
+  "rules": {
+    "indent": [
+      true,
+      "spaces",
+      2
+    ],
+    "triple-equals": true,
+    "typeof-compare": true,
+    "variable-name": true,
+    "align": [
+      true,
+      "parameters",
+      "statements"
+    ],
+    "cyclomatic-complexity": true,
+    "arrow-parens": false,
+    "encoding": true,
+    "no-invalid-template-strings": true,
+    "no-trailing-whitespace": true,
+    "number-literal-format": true,
+    "quotemark": [
+      true,
+      "double"
+    ],
+    "semicolon": false,
+    "trailing-comma": false,
+    "no-shadowed-variable": false,
+    "no-console": false,
+    "space-before-function-paren": false,
+    "object-literal-sort-keys": false,
+    "one-variable-per-declaration": false,
+    "only-arrow-functions": false,
+    "prefer-for-of": false,
+    "no-string-literal": false,
+    "max-line-length": false,
+    "prefer-const": false,
+    "interface-name": false
+  },
+  "rulesDirectory": []
+}

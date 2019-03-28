@@ -1,2 +1,2 @@
 
-export function httpLambdaFuncEmptyResponse(event, response) { }
+export function httpLambdaFuncEmptyResponse(event, context, response) { }

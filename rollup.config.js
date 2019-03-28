@@ -17,7 +17,7 @@ export default [
     {},
     base,
     {
-      input: "src/index.ts",
+      input: "src/wrapper.ts",
       output: {
         format: 'cjs',
         file: "dist/index.js"

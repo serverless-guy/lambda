@@ -9,7 +9,7 @@ export interface IResponseFunctionResponse {
 }
 
 export declare type TErrorFunction = (event?: APIGatewayEvent, error?: any) => any
-export declare type THandlerFunction = (event?: APIGatewayEvent, responser?: TResponseFunction) => any
+export declare type THandlerFunction = (event?: APIGatewayEvent, context?: Context, responser?: TResponseFunction) => any
 export declare type TResponseFunction = (data: any, statusCode?: number, additionalOptions?: any) => IResponseFunctionResponse
 export declare function defaultErrorFunc(event: APIGatewayEvent, error: Error): IResponseFunctionResponse;
 export declare function resolver(event: APIGatewayEvent, context: Context, func: THandlerFunction, ...middlewares): any;
