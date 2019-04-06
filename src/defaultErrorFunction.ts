@@ -10,5 +10,5 @@ export function defaultErrorFunction(error: Error, responser: ResponserFunction)
   return responser({
     errorCode: error.name,
     errorMessage: error.message
-  }, 500)
+  }, 500);
 }

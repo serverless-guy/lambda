@@ -1,5 +1,5 @@
-import { HandlerEvent } from "@lambda/types"
-import { Context } from "aws-lambda"
+import { HandlerEvent } from "@lambda/types";
+import { Context } from "aws-lambda";
 
 /**
  * Resolves middleware that takes place before the actual handler
@@ -9,23 +9,23 @@ import { Context } from "aws-lambda"
  * @return Promise
  */
 export async function resolveBefores(event: HandlerEvent, context: Context, middlewares: any[]): Promise<any> {
-  const request = { event: { ...event }, context: { ...context } }
+  const request = { event: { ...event }, context: { ...context } };
 
   if (!middlewares) {
-    return request
+    return request;
   }
 
-  return await middlewares.reduce(async (previous, current) => {
+  return middlewares.reduce(async (previous, current) => {
     if (!previous) {
       return new Promise((resolve, reject) => {
-        return current(request, resolve)
-      })
+        return current(request, resolve).catch(reject);
+      });
     }
 
-    const req = await previous
+    const req = await previous;
 
     return new Promise((resolve, reject) => {
-      return current(req, resolve)
-    })
-  }, undefined)
+      return current(req, resolve).catch(reject);
+    });
+  }, undefined);
 }

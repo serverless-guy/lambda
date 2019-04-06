@@ -4,22 +4,22 @@
  * @param response ResponserFunction
  * @return Promise
  */
-export async function resolveAfters(middlewares, response) {
+export async function resolveAfters(middlewares: any, response: any) {
   if (!middlewares) {
-    return response
+    return response;
   }
 
-  return await middlewares.reduce(async (previous, current) => {
+  return await middlewares.reduce(async (previous: any, current: any) => {
     if (!previous) {
       return new Promise((resolve) => {
-        return current(response, resolve)
-      })
+        return current(response, resolve);
+      });
     }
 
-    const res = await previous
+    const res = await previous;
 
     return new Promise((resolve) => {
-      return current(res, resolve)
-    })
-  }, undefined)
+      return current(res, resolve);
+    });
+  }, undefined);
 }

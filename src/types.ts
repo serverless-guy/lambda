@@ -11,9 +11,9 @@ import {
 } from "aws-lambda"
 
 export interface HandlerObject {
-  after?: any,
+  after?: MiddlewareFunction[],
 
-  before?: any,
+  before?: MiddlewareFunction[],
 
   handler: HandlerFunction,
 
@@ -37,7 +37,7 @@ export interface RequestObject {
 
 export type PromiseCallback = <T>(params: T) => T
 
-export type MiddlewareFunction = (request: RequestObject, next: PromiseCallback) => Promise<any>
+export type MiddlewareFunction = (request: RequestObject, next: PromiseCallback) => Promise<any> | any
 
 export type ErrorHandlerFunction = (error: Error, responser: ResponserFunction) => void
 

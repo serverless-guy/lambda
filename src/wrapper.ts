@@ -1,9 +1,10 @@
-import { HandlerObject, WrappedHandlerFunction, ResponserFunction } from "@lambda/types"
-import { defaultResponserFunction } from "@lambda/defaultResponserFunction"
-import { defaultErrorFunction } from "@lambda/defaultErrorFunction"
-import { resolveBefores } from "@lambda/resolveBefores"
-import { resolveAfters } from "@lambda/resolveAfters"
-import { object, optionalArrayOfFunc, func, optionalFunc } from "assert-plus"
+
+import { defaultErrorFunction } from "@lambda/defaultErrorFunction";
+import { httpResponser } from "@lambda/httpResponser";
+import { resolveAfters } from "@lambda/resolveAfters";
+import { resolveBefores } from "@lambda/resolveBefores";
+import { HandlerObject, ResponserFunction, WrappedHandlerFunction } from "@lambda/types";
+import { func, object, optionalArrayOfFunc, optionalFunc } from "assert-plus";
 
 /**
  * Wraps around your handler function
@@ -12,29 +13,34 @@ import { object, optionalArrayOfFunc, func, optionalFunc } from "assert-plus"
  * @return Function
  */
 export function wrapper(handlerObject: HandlerObject, responserFunction?: ResponserFunction): WrappedHandlerFunction {
-  object(handlerObject)
-  optionalArrayOfFunc(handlerObject.before)
-  optionalArrayOfFunc(handlerObject.after)
-  optionalFunc(handlerObject.errorHandler)
-  func(handlerObject.handler)
+  object(handlerObject);
+  optionalArrayOfFunc(handlerObject.before);
+  optionalArrayOfFunc(handlerObject.after);
+  optionalFunc(handlerObject.errorHandler);
+  func(handlerObject.handler);
 
-  let { handler, before, after, errorHandler } = handlerObject
+  const before: any     = handlerObject.before;
+  const after: any      = handlerObject.after;
+  const handler: any    = handlerObject.handler;
+  let errorHandler: any = handlerObject.errorHandler;
 
   if (!errorHandler) {
-    errorHandler = defaultErrorFunction
+    errorHandler = defaultErrorFunction;
   }
 
   if (!responserFunction) {
-    responserFunction = defaultResponserFunction
+    responserFunction = httpResponser;
   }
 
-  return async function(event, context) {
+  return async function(event: any, context: any) {
     try {
-      const resolved = await resolveBefores(event, context, before)
+      const resolved = await resolveBefores(event, context, before);
 
-      return handler(resolved, responserFunction, (response): any => resolveAfters(after, response))
+      const handled = await handler(resolved, responserFunction, (response: any): any => resolveAfters(after, response));
+
+      return handled;
     } catch (error) {
-      return errorHandler(error, responserFunction)
+      return errorHandler(error, responserFunction);
     }
-  }
+  };
 }

@@ -39,7 +39,6 @@
       true,
       "double"
     ],
-    "semicolon": false,
     "trailing-comma": false,
     "no-shadowed-variable": false,
     "no-console": false,
