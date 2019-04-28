@@ -1,4 +1,4 @@
-import { APIGatewayProxyResult } from "aws-lambda"
+import { APIGatewayProxyResult } from "aws-lambda";
 
 /**
  * Default responser
@@ -12,5 +12,5 @@ export function httpResponser(data: any): APIGatewayProxyResult {
       "Access-Control-Allow-Origin": "*"
     },
     statusCode: 200
-  }
+  };
 }

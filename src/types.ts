@@ -2,22 +2,23 @@ import {
   APIGatewayEvent,
   CloudWatchLogsEvent,
   CognitoUserPoolEvent,
-  DynamoDBStreamEvent,
   Context,
+  DynamoDBStreamEvent,
   S3Event,
   ScheduledEvent,
   SNSEvent,
   SQSEvent
-} from "aws-lambda"
+} from "aws-lambda";
 
 export interface HandlerObject {
-  after?: MiddlewareFunction[],
 
-  before?: MiddlewareFunction[],
+  after?: MiddlewareFunction[];
 
-  handler: HandlerFunction,
+  before?: MiddlewareFunction[];
 
-  errorHandler?: ErrorHandlerFunction
+  handler: HandlerFunction;
+
+  errorHandler?: ErrorHandlerFunction;
 }
 
 export type HandlerEvent = APIGatewayEvent
@@ -27,22 +28,22 @@ export type HandlerEvent = APIGatewayEvent
 | S3Event
 | ScheduledEvent
 | SNSEvent
-| SQSEvent
+| SQSEvent;
 
 export interface RequestObject {
-  event: HandlerEvent,
+  event: HandlerEvent;
 
-  context: Context
+  context: Context;
 }
 
-export type PromiseCallback = <T>(params: T) => T
+export type PromiseCallback = <T>(params: T) => T;
 
-export type MiddlewareFunction = (request: RequestObject, next: PromiseCallback) => Promise<any> | any
+export type MiddlewareFunction = (request: RequestObject, next: PromiseCallback) => Promise<any> | any;
 
-export type ErrorHandlerFunction = (error: Error, responser: ResponserFunction) => void
+export type ErrorHandlerFunction = (error: Error, responser: ResponserFunction) => any;
 
-export type ResponserFunction = (...params: any) => any
+export type ResponserFunction = (...params: any[]) => any;
 
-export type HandlerFunction = (request: RequestObject, responser?: ResponserFunction, next?: PromiseCallback) => Promise<any>
+export type HandlerFunction = (request: RequestObject, responser?: ResponserFunction, next?: PromiseCallback) => Promise<any>;
 
-export type WrappedHandlerFunction = (event: HandlerEvent, context: Context) => Promise<any>
+export type WrappedHandlerFunction = (event: any, context: any) => Promise<any>;

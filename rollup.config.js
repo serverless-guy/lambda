@@ -7,6 +7,7 @@ const base = {
     typescript(),
     alias({
       "@lambda": "./src",
+      "@/fakes": "./test/fakes"
     }),
     uglify()
   ]

@@ -9,7 +9,8 @@
       "esnext"
     ],
     "paths": {
-      "@lambda/*": ["*"]
+      "@lambda/*": ["*"],
+      "@/fakes/*": ["../test/fakes/*"]
     }
   },
   "include": [
