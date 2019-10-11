@@ -1,49 +1,7 @@
-import {
-  APIGatewayEvent,
-  CloudWatchLogsEvent,
-  CognitoUserPoolEvent,
-  Context,
-  DynamoDBStreamEvent,
-  S3Event,
-  ScheduledEvent,
-  SNSEvent,
-  SQSEvent
-} from "aws-lambda";
+import { APIGatewayProxyResult } from "aws-lambda";
 
-export interface HandlerObject {
+export type HeadersType = NonNullable<APIGatewayProxyResult["headers"]>;
 
-  after?: MiddlewareFunction[];
+export type ResponseFunction = (data: any, statusCode?: number, headers?: HeadersType) => any;
 
-  before?: MiddlewareFunction[];
-
-  handler: HandlerFunction;
-
-  errorHandler?: ErrorHandlerFunction;
-}
-
-export type HandlerEvent = APIGatewayEvent
-| CloudWatchLogsEvent
-| CognitoUserPoolEvent
-| DynamoDBStreamEvent
-| S3Event
-| ScheduledEvent
-| SNSEvent
-| SQSEvent;
-
-export interface RequestObject {
-  event: HandlerEvent;
-
-  context: Context;
-}
-
-export type PromiseCallback = <T>(params: T) => T;
-
-export type MiddlewareFunction = (request: RequestObject, next: PromiseCallback) => Promise<any> | any;
-
-export type ErrorHandlerFunction = (error: Error, responser: ResponserFunction) => any;
-
-export type ResponserFunction = (...params: any[]) => any;
-
-export type HandlerFunction = (request: RequestObject, responser?: ResponserFunction, next?: PromiseCallback) => Promise<any>;
-
-export type WrappedHandlerFunction = (event: any, context: any) => Promise<any>;
+export type ErrorResponseFunction = (error: any, response: ResponseFunction) => any;
