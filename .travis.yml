@@ -7,6 +7,10 @@ matrix:
       osx_image: xcode9.2
 language: node_js
 node_js:
+<<<<<<< HEAD
+=======
+  - 9.2.0
+>>>>>>> 3bf136c385a9545b562cf8ee696105f988ccac60
   - 13.0.0
   - lts/*
 before_install:
