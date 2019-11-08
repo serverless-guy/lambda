@@ -18,7 +18,143 @@ npm i --save @serverless-guy/lambda
   
 # Usage  
   
-## TBA
+## Basic Usage 
+  
+```javascript
+import { wrapper } from "@serverless-guy/lambda";
+
+// your wrapper that returns the actual handler
+export const handler = wrapper(someHandler);
+
+// your handler
+function someHandler(request, response) {
+  // both event and context are located in request parameter
+  const { event, context } = request;
+
+  console.log(event);
+  console.log(context);
+
+  // by default, response function stringifies your object
+  return response(event);
+}
+```
+## Using middleware  
+  
+```javascript
+import { wrapper } from "@serverless-guy/lambda";
+
+// your wrapper that returns the actual handler
+export const handler = wrapper(someHandler);
+
+function parse(body) {
+  if (!body) {
+    return {}
+  }
+
+  return JSON.parse(body);
+}
+
+// our middleware
+export function checkBody(request, next) {
+  const { event } = request;
+
+  const body = parse(event.body);
+
+  if (!body.sampleValue1) {
+    throw new Error("Validation Failed");
+  }
+
+  return next(request);
+}
+
+// add the middleware
+handler.pushMiddleware(checkBody);
+
+// your handler
+function someHandler(request, response) {
+  // both event and context are located in request parameter
+  const { event, context } = request;
+
+  const body = JSON.parse(event.body);
+  console.log(context);
+
+  // by default, response function stringifies your object
+  return response({ message: body.sampleValue1 });
+}
+```  
+  
+## Using custom response function  
+  
+```javascript
+import { wrapper } from "@serverless-guy/lambda";
+
+// your wrapper that returns the actual handler
+export const handler = wrapper(someHandler);
+
+// set the response template function
+handler.setResponseTemplate(customResponseTemplate);
+
+// your custom response template function
+function customResponseTemplate(data, statusCode = 200, headers = {}) {
+    // do something
+    data.returnedOn = new Date();
+
+    return {
+    body: JSON.stringify(data),
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      ...headers
+    },
+    statusCode
+  };
+}
+
+// your handler
+function someHandler(request, response) {
+  // both event and context are located in request parameter
+  const { event, context } = request;
+
+  console.log(event);
+  console.log(context);
+
+  // by default, response function stringifies your object
+  return response(event);
+}
+```
+## Using custom error response function  
+  
+```javascript
+import { wrapper } from "@serverless-guy/lambda";
+ 
+// your wrapper that returns the actual handler
+export const handler = wrapper(someHandler);
+
+// set the response template function
+handler.setCatchTemplate(customCatchResponseTemplate);
+
+// your custom error response template function
+function customCatchResponseTemplate(error, responseFunction) {
+  // do something
+  const errorResponseObject = {
+    errorCode:    error.name,
+    errorMessage: error.message
+  };
+
+  return response(errorResponseObject, 418); /** I'm a f***ing teapot */
+}
+
+// your handler
+function someHandler(request, response) {
+  // both event and context are located in request parameter
+  const { event, context } = request;
+
+  console.log(event);
+  console.log(context);
+
+  // by default, response function stringifies your object
+  return response(event);
+}
+```
   
 # Example  
   

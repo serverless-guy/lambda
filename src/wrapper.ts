@@ -32,7 +32,7 @@ export function wrapper(handlerFn: Handler): Wrapper {
     try {
       const newRequest = await resolveMiddleware(request, wrapperProperties.middlewares);
       const resolvedHandler = await handlerFn(newRequest, wrapperProperties.responseFunction);
-  
+
       return resolvedHandler;
     } catch (error) {
       return wrapperProperties.errorResponseFunction(error, wrapperProperties.responseFunction);

@@ -1,9 +1,5 @@
 {
   "defaultSeverity": "error",
-  "extends": [
-    "tslint:recommended",
-    "tslint-config-security"
-  ],
   "jsRules": {
     "quotemark": false,
     "object-literal-sort-keys": false,
