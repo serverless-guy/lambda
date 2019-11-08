@@ -1,4 +1,7 @@
 # @serverless-guy/lambda  
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/serverless-guy/lambda.svg)](https://greenkeeper.io/)
+
 [![Build Status][travis-image]][travis-url]
 [![NPM Version][npm-image]][npm-url]
 [![Downloads Stats][npm-downloads]][npm-url]  
