@@ -5,11 +5,16 @@ matrix:
       sudo: required
     - os: osx
       osx_image: xcode9.2
-install:
-  - npm install
-  - npm run build
 language: node_js
 node_js:
-  - 9.2.0
-  - 10.0.0
   - 13.0.0
+  - lts/*
+before_install:
+  - npm i -g npm@latest
+script:
+  - npm run coverage
+after_success:
+  - nyc report --reporter=text-lcov > coverage.lcov
+git:
+  depth: false
+cache: npm
