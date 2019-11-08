@@ -5,5 +5,7 @@
 /tsconfig.json
 /.gitignore
 /.rpt2_cache
-coverage
+/coverage
 /.nyc_output
+/.vscode
+/tslint.json
