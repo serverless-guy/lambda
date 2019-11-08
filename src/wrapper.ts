@@ -1,20 +1,22 @@
+import { ErrorResponser } from "./types/errorResponser.type";
+import { Event } from "./types/event.type";
+import { Handler } from "./types/handler.type";
+import { Request } from "./types/request.type";
+import { Responser } from "./types/responser.type";
 import { Wrapper } from "./types/wrapper.type";
 import { WrapperProperties } from "./types/wrapperProperties.type";
-import { Request } from "./types/request.type";
-import { Event } from "./types/event.type";
-import { Responser } from "./types/responser.type";
-import { Context } from "aws-lambda";
 import { ok } from "./responses/http/ok";
 import { faulty } from "./responses/http/faulty";
-import { ErrorResponser } from "./types/errorResponser.type";
 import { resolveMiddleware } from "./resolveMiddleware.utils";
+import { Context } from "aws-lambda";
 
 /**
- * Wraps a function that takes request and response as argument
+ * Wraps a function that takes request (event, context)
+ * and response (response template function) as argument
  * @param handlerFn customized handler function
- * @return Promise
+ * @return Promise<Wrapper>
  */
-export function wrapper(handlerFn) {
+export function wrapper(handlerFn: Handler): Wrapper {
   const wrapperProperties: WrapperProperties = {
     middlewares: [],
     responseFunction: ok,

@@ -3,6 +3,11 @@ import { Request } from "./types/request.type";
 type Resolve = (value?: any) => void;
 type Reject = (reason?: any) => void;
 
+/**
+ * Resolve middleware
+ * @param request event and context
+ * @param middlewares list of middlewares
+ */
 export async function resolveMiddleware(request: Request, middlewares = []) {
   const { event, context } = request;
 

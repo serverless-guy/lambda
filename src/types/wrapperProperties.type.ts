@@ -1,8 +1,9 @@
 import { Responser } from "./responser.type";
 import { ErrorResponser } from "./errorResponser.type";
+import { Middleware } from "./middleware.type";
 
 export type WrapperProperties = {
-  middlewares: any[],
+  middlewares: NonNullable<Middleware[]>,
 
   responseFunction: Responser;
 

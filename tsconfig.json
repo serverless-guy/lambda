@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es3",
+    "target": "es5",
+    "declaration": true,
+    "declarationDir": "dist",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "sourceMap": true,
@@ -10,8 +12,7 @@
     ]
   },
   "include": [
-    "./src",
-    "./test"
+    "./src"
   ],
   "exclude": [
     "node_modules"

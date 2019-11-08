@@ -1,3 +1,4 @@
 import { Request } from "./request.type";
+import { Responser } from "./responser.type";
 
-export type Handler = (request: Request, next, response) => Promise<any>;
+export type Handler = (request: Request, response: Responser) => Promise<any>;
