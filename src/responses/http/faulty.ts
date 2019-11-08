@@ -1,5 +1,5 @@
 import { APIGatewayProxyResult } from "aws-lambda";
-import { ResponseFunction } from "../types";
+import { Responser } from "../../types/responser.type";
 
 const HTTP_SERVER_ERROR = 500;
 
@@ -9,7 +9,7 @@ const HTTP_SERVER_ERROR = 500;
  * @param response ResponseFunction
  * @return APIGatewayProxyResult
  */
-export function error(error: Error, response: ResponseFunction): APIGatewayProxyResult {
+export function faulty(error: Error, response: Responser): APIGatewayProxyResult {
   const errorResponseObject = {
     errorCode:    error.name,
     errorMessage: error.message

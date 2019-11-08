@@ -1,12 +1,12 @@
 import { APIGatewayProxyResult } from "aws-lambda";
-import { HeadersType } from "../types";
+import { Headers } from "../../types/headers.type";
 
 /**
  * Default responser
  * @param data data for response
  * @return APIGatewayProxyResult
  */
-export function http(data: any, statusCode: number = 200, headers: HeadersType = {}): APIGatewayProxyResult {
+export function ok(data: any, statusCode: number = 200, headers: Headers = {}): APIGatewayProxyResult {
   return {
     body: JSON.stringify(data),
     headers: {

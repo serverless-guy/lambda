@@ -7,5 +7,8 @@ export const context = {
   awsRequestId: "asdas-adsas-asdasdas-asdasda-adss",
   logGroupName: "myLogGroup",
   logStreamName: "myLogStream",
+  done: (error, result) => 11111,
+  fail: (error) => 11111,
+  succeed: (result) => 11111,
   getRemainingTimeInMillis: () => 11147
 };

@@ -1,30 +1,70 @@
 import { context } from "./fakes/context";
 import { event } from "./fakes/event";
-import { lambda } from "../src/lambda";
+import { helloWorld } from "./fakes/handlers/helloWorld.handler";
+import { validation } from "./fakes/handlers/validation.handler";
+import { checkBody } from "./fakes/handlers/checkBody.middleware";
 import * as chai from "chai";
 import * as promisedChai from "chai-as-promised";
-import { Context } from "aws-lambda";
+import { wrapper } from "../src/wrapper";
 
-/* tslint:disable */
-describe("Wrapper", () => {
-  chai.use(promisedChai);
-  chai.should();
+describe("wrapper", () => {
+  const { expect } = chai;
 
-  it("should resolve wrapped lambda handler", (done) => {
-    lambda(class SampleHandler {
-      fire(request, response) {
-        return response({ success: true })
-      }
-    })(event, context as Context);
+  before(() => {
+    chai.use(promisedChai);
   });
 
+  it("should resolve basic handler", async () => {
+    const localEvent = { ...event };
+    const response = await wrapper(helloWorld)(localEvent, context);
 
-  // it("should resolve wrapped lambda handler", (done) => {
-  //   const handler = (request, response) => {
-  //     return response({ message: "test" });
-  //   }
+    expect(response).to.haveOwnProperty("body");
 
-  //   wrapper({ handler })(event, context).should.eventually.have.ownProperty("body").notify(done);
-  // });
+    const body = JSON.parse(response.body);
+
+    expect(body).to.haveOwnProperty("message");
+    expect(body).to.haveOwnProperty("user");
+    expect(body.message).to.be.equal("Hello World!");
+    expect(body.user).to.be.equal("anonymouse");
+  });
+
+  it("should resolve handler with validation middleware (validation success)", async () => {
+    const localEvent = { ...event };
+    const handler = await wrapper(validation);
+
+    handler.pushMiddleware(checkBody);
+
+    localEvent.body = JSON.stringify({ sampleValue1: "testing..." });
+
+    const response = await handler(localEvent, context);
+
+    expect(response).to.haveOwnProperty("body");
+
+    const body = JSON.parse(response.body);
+
+    expect(body).to.haveOwnProperty("message");
+    expect(body).to.haveOwnProperty("user");
+    expect(body.message).to.be.equal("testing...");
+    expect(body.user).to.be.equal("anonymouse");
+  });
+
+  it("should resolve handler with validation middleware (validation fail)", async () => {
+    const localEvent = { ...event };
+    const handler = await wrapper(validation);
+
+    handler.pushMiddleware(checkBody);
+
+    const response = await handler(localEvent, context);
+
+    expect(response).to.haveOwnProperty("body");
+    expect(response).to.haveOwnProperty("statusCode");
+    expect(response.statusCode).to.be.equal(500);
+
+    const body = JSON.parse(response.body);
+
+    expect(body).to.haveOwnProperty("errorCode");
+    expect(body).to.haveOwnProperty("errorMessage");
+    expect(body.errorCode).to.be.equal("Error");
+    expect(body.errorMessage).to.be.equal("Validation Failed");
+  });
 });
-/* tslint:enable */
