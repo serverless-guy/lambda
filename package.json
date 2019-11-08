@@ -4,34 +4,26 @@
   "description": "serverless lambda wrapper utility",
   "main": "dist/index.js",
   "scripts": {
-    "test": "mocha -r ts-node/register test/**/*.test.ts",
+    "test": "mocha test/**/*.test.ts",
+    "coverage": "nyc npm test",
     "rollup": "rollup -c",
     "clean": "rimraf ./dist",
     "build": "npm run clean && npm run rollup"
   },
   "types": "dist/wrapper.d.ts",
-  "nyc": {
-    "include": [
-      "src/**/*.ts"
-    ],
-    "extension": [
-      ".ts"
-    ],
-    "require": [
-      "ts-node/register"
-    ]
-  },
   "keywords": [
     "lambda",
     "serverless",
     "aws",
+    "response",
+    "CORS",
     "aws-lambda",
-    "lambda-wrapper"
+    "lambda-wrapper",
+    "wrapper"
   ],
   "author": "yakovmeister <so@tfwno.gf>",
   "license": "MIT",
   "devDependencies": {
-    "@types/assert-plus": "^1.0.4",
     "@types/aws-lambda": "^8.10.18",
     "@types/chai": "^4.1.7",
     "@types/chai-as-promised": "^7.1.0",
