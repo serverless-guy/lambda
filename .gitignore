@@ -7,3 +7,5 @@ node_modules
 test-reports
 package-lock.json
 fixtures
+dist/*
+.vscode
