@@ -6,6 +6,7 @@ import { Middleware } from "./types/middleware.type";
 import { Responser } from "./types/responser.type";
 import { Wrapper } from "./types/wrapper.type";
 import { WrapperProperties } from "./types/wrapperProperties.type";
+import { Next } from "./types/next.type";
 import { ok } from "./responses/http/ok";
 import { faulty } from "./responses/http/faulty";
 import { resolveMiddleware } from "./resolveMiddleware.utils";
@@ -19,6 +20,7 @@ export {
   Wrapper,
   WrapperProperties,
   ErrorResponser,
+  Next,
   Middleware
 }
 
