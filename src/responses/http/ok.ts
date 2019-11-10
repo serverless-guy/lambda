@@ -6,7 +6,7 @@ import { Headers } from "../../types/headers.type";
  * @param data data for response
  * @return APIGatewayProxyResult
  */
-export function ok(data: any, statusCode: number = 200, headers: Headers = {}): APIGatewayProxyResult {
+export function ok(data: any, statusCode = 200, headers: Headers = {}): APIGatewayProxyResult { // eslint-disable-line
   return {
     body: JSON.stringify(data),
     headers: {

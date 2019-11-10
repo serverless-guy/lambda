@@ -12,18 +12,6 @@ import { faulty } from "./responses/http/faulty";
 import { resolveMiddleware } from "./resolveMiddleware.utils";
 import { Context } from "aws-lambda";
 
-export {
-  wrapper,
-  Responser,
-  Request,
-  Handler,
-  Wrapper,
-  WrapperProperties,
-  ErrorResponser,
-  Next,
-  Middleware
-}
-
 /**
  * Wraps a function that takes request (event, context)
  * and response (response template function) as argument
@@ -73,3 +61,15 @@ function wrapper(handlerFn: Handler): Wrapper {
 
   return handler;
 }
+
+export {
+  wrapper,
+  Responser,
+  Request,
+  Handler,
+  Wrapper,
+  WrapperProperties,
+  ErrorResponser,
+  Next,
+  Middleware
+};

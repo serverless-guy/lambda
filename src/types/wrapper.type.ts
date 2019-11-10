@@ -11,5 +11,5 @@ export type Wrapper = {
 
   setCatchTemplate: (fn: ErrorResponser) => Wrapper;
 
-  (event: Event, context: Context): Promise<any>;
+  (event: Event, context: Context): Promise<any>; // eslint-disable-line
 };

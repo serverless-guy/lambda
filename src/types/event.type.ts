@@ -1,4 +1,4 @@
 
 export type Event = {
-  [key: string]: any;
+  [key: string]: any; // eslint-disable-line
 }

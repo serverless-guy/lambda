@@ -3,7 +3,7 @@ import { ErrorResponser } from "./errorResponser.type";
 import { Middleware } from "./middleware.type";
 
 export type WrapperProperties = {
-  middlewares: NonNullable<Middleware[]>,
+  middlewares: NonNullable<Middleware[]>;
 
   responseFunction: Responser;
 

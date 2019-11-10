@@ -1,14 +1,14 @@
 import { Request } from "./types/request.type";
 
-type Resolve = (value?: any) => void;
-type Reject = (reason?: any) => void;
+type Resolve = <T>(value?: T) => void;
+type Reject = <T>(reason?: T) => void;
 
 /**
  * Resolve middleware
  * @param request event and context
  * @param middlewares list of middlewares
  */
-export async function resolveMiddleware(request: Request, middlewares = []) {
+export async function resolveMiddleware(request: Request, middlewares = []): Promise<Request> {
   const { event, context } = request;
 
   if (!middlewares.length) {
