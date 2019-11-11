@@ -4,6 +4,7 @@ import { Handler } from "./types/handler.type";
 import { Request } from "./types/request.type";
 import { Middleware } from "./types/middleware.type";
 import { Responser } from "./types/responser.type";
+import { Response } from "./types/response.type";
 import { Wrapper } from "./types/wrapper.type";
 import { WrapperProperties } from "./types/wrapperProperties.type";
 import { Next } from "./types/next.type";
@@ -65,6 +66,7 @@ function wrapper(handlerFn: Handler): Wrapper {
 export {
   wrapper,
   Responser,
+  Response,
   Request,
   Handler,
   Wrapper,
