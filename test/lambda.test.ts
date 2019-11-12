@@ -2,7 +2,9 @@ import { context } from "./fakes/context";
 import { event } from "./fakes/event";
 import { helloWorld } from "./fakes/handlers/helloWorld.handler";
 import { validation } from "./fakes/handlers/validation.handler";
+import { addTimeStamp } from "./fakes/handlers/addTimeStamp.middleware";
 import { checkBody } from "./fakes/handlers/checkBody.middleware";
+import { parseBody } from "./fakes/handlers/parseBody.middleware";
 import { ok } from "./fakes/handlers/ok.responser";
 import { faulty } from "./fakes/handlers/faulty.responser";
 import * as chai from "chai";
@@ -112,5 +114,34 @@ describe("wrapper", () => {
     expect(body.customError).to.be.true;
     expect(body.errorCode).to.be.equal("Error");
     expect(body.errorMessage).to.be.equal("Validation Failed");
+  });
+
+  it("should chain middlewares", async () => {
+    const localEvent = { ...event };
+    const handler = await wrapper(validation);
+
+    handler.pushMiddlewares(
+      parseBody,
+      addTimeStamp
+    );
+
+    handler.setCatchTemplate(faulty);
+
+    localEvent.body = JSON.stringify({ sampleValue1: "testing..." });
+
+    const response = await handler(localEvent, context);
+
+    expect(response).to.haveOwnProperty("body");
+    expect(response).to.haveOwnProperty("statusCode");
+    expect(response.statusCode).to.be.equal(200);
+
+    const body = JSON.parse(response.body);
+
+    expect(body).to.haveOwnProperty("generatedAt");
+    expect(body).to.haveOwnProperty("message");
+    expect(body).to.haveOwnProperty("user");
+    expect(body.message).to.be.equal("testing...");
+    expect(body.user).to.be.equal("anonymouse");
+    expect(body.generatedAt).to.be.equal("2019-11-12");
   });
 });

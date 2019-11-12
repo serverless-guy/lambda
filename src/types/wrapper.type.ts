@@ -7,6 +7,8 @@ import { Middleware } from "./middleware.type";
 export type Wrapper = {
   pushMiddleware: (middleware: Middleware) => Wrapper;
 
+  pushMiddlewares: (...middlewares: Middleware[]) => Wrapper;
+
   setResponseTemplate: (fn: Responser) => Wrapper;
 
   setCatchTemplate: (fn: ErrorResponser) => Wrapper;

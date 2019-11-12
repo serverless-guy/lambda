@@ -54,8 +54,16 @@ function wrapper(handlerFn: Handler): Wrapper {
     return this;
   }
 
-  handler.pushMiddleware = (middleware): Wrapper => {
+  handler.pushMiddleware = (middleware: Middleware): Wrapper => {
     wrapperProperties.middlewares.push(middleware);
+
+    return this;
+  }
+
+  handler.pushMiddlewares = (...middlewares: Middleware[]): Wrapper => {
+    middlewares.forEach((middleware: Middleware) => {
+      handler.pushMiddleware(middleware);
+    });
 
     return this;
   }
