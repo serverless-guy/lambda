@@ -16,5 +16,7 @@ export function faulty(error: Error, response: Responser): APIGatewayProxyResult
     customError: true
   };
 
-  return response(errorResponseObject, HTTP_SERVER_ERROR);
+  return response(errorResponseObject, HTTP_SERVER_ERROR, {
+    "Powered-By": "Error"
+  });
 }
