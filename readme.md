@@ -1,5 +1,5 @@
 # @serverless-guy/lambda  
-
+[![codecov](https://codecov.io/gh/serverless-guy/lambda/branch/2.0/graph/badge.svg)](https://codecov.io/gh/serverless-guy/lambda)
 [![Build Status][travis-image]][travis-url]
 [![Greenkeeper badge][greenkeeper-image]](https://greenkeeper.io/)
 [![NPM Version][npm-image]][npm-url]
