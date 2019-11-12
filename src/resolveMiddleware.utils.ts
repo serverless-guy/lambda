@@ -12,7 +12,7 @@ export async function resolveMiddleware(request: Request, middlewares = []): Pro
   const { event, context } = request;
 
   if (!middlewares.length) {
-    return { event, context } as Request;
+    return { ...request };
   }
 
   return middlewares.reduce(async (previous, current) => {

@@ -3,6 +3,7 @@ import { event } from "./fakes/event";
 import { helloWorld } from "./fakes/handlers/helloWorld.handler";
 import { validation } from "./fakes/handlers/validation.handler";
 import { addTimeStamp } from "./fakes/handlers/addTimeStamp.middleware";
+import { withError } from "./fakes/handlers/withError.middleware";
 import { checkBody } from "./fakes/handlers/checkBody.middleware";
 import { parseBody } from "./fakes/handlers/parseBody.middleware";
 import { ok } from "./fakes/handlers/ok.responser";
@@ -143,5 +144,26 @@ describe("wrapper", () => {
     expect(body.message).to.be.equal("testing...");
     expect(body.user).to.be.equal("anonymouse");
     expect(body.generatedAt).to.be.equal("2019-11-12");
+  });
+
+  it("should resolve middleware without return value", async () => {
+    const localEvent = { ...event };
+    const handler = await wrapper(helloWorld);
+
+    handler.pushMiddlewares(
+      parseBody,
+      addTimeStamp,
+      withError
+    );
+
+    handler.setCatchTemplate(faulty);
+
+    localEvent.body = JSON.stringify({ sampleValue1: "testing..." });
+
+    const response = await handler(localEvent, context);
+
+    expect(response).to.haveOwnProperty("body");
+    expect(response).to.haveOwnProperty("statusCode");
+    expect(response.statusCode).to.be.equal(500);
   });
 });
