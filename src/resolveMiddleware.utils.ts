@@ -19,13 +19,9 @@ export async function resolveMiddleware(request: Request, middlewares = []): Pro
     if (!previous) {
       return new Promise(async (resolve: Resolve, reject: Reject) => {
         const newRequest = { event, context };
-        try {
-          const next = await current(newRequest, resolve);
-          if (!next) {
-            return newRequest;
-          }
 
-          return next;
+        try {
+          await current(newRequest, resolve);
         } catch (error) {
           return reject(error);
         }
@@ -36,13 +32,7 @@ export async function resolveMiddleware(request: Request, middlewares = []): Pro
 
     return new Promise(async (resolve: Resolve, reject: Reject) => {
       try {
-        const newNext = await current(next, resolve);
-
-        if (!newNext) {
-          return next;
-        }
-
-        return newNext;
+        await current(next, resolve);
       } catch (error) {
         return reject(error);
       }
