@@ -8,7 +8,7 @@ type Reject = <T>(reason?: T) => void;
  * @param request event and context
  * @param middlewares list of middlewares
  */
-export async function resolveMiddleware(request: Request, middlewares = []): Promise<Request> {
+export async function resolveMiddleware(request: Request, middlewares: any[]): Promise<Request> { // eslint-disable-line
   const { event, context } = request;
 
   if (!middlewares.length) {
