@@ -10,11 +10,12 @@ node_js:
   - 13.0.0
   - lts/*
 before_install:
+  - npm i -g codecov
   - npm i -g npm@latest
 script:
   - npm run coverage
 after_success:
-  - nyc report --reporter=text-lcov > coverage.lcov
+  - nyc report --reporter=text-lcov > coverage.lcov && codecov
 git:
   depth: false
 cache: npm
