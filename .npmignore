@@ -9,3 +9,7 @@
 /.nyc_output
 /.vscode
 /tslint.json
+/.eslintignore
+/.eslintrc
+/.mocharc
+/.nycrc
