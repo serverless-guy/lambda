@@ -29,7 +29,7 @@
     "@types/chai": "4.2.5",
     "@types/chai-as-promised": "7.1.2",
     "@types/mocha": "5.2.7",
-    "@types/node": "12.12.8",
+    "@types/node": "12.12.9",
     "@typescript-eslint/eslint-plugin": "2.8.0",
     "@typescript-eslint/parser": "2.8.0",
     "chai": "4.2.0",
