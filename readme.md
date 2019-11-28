@@ -3,7 +3,8 @@
 [![Build Status][travis-image]][travis-url]
 [![Greenkeeper badge][greenkeeper-image]](https://greenkeeper.io/)
 [![NPM Version][npm-image]][npm-url]
-[![Downloads Stats][npm-downloads]][npm-url]  
+[![Downloads Stats][npm-downloads]][npm-url]
+[![Donate][paypal-image]](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=938FMCPPQG4DQ&currency_code=USD&source=url)
   
 AWS Lambda wrapper that allows you to write class based handlers.  
   
@@ -174,3 +175,4 @@ function someHandler(request, response) {
 [travis-image]: https://travis-ci.org/serverless-guy/lambda.svg?branch=2.0
 [travis-url]: https://travis-ci.org/serverless-guy/lambda
 [greenkeeper-image]: https://badges.greenkeeper.io/serverless-guy/lambda.svg
+[paypal-image]: https://img.shields.io/badge/Donate-PayPal-green.svg
