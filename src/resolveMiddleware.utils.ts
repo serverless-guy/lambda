@@ -22,6 +22,14 @@ export async function resolveMiddleware(request: Request, middlewares: any[]): P
 
         try {
           await current(newRequest, resolve);
+
+          const fallback = await current(newRequest);
+
+          if (!fallback) {
+            return resolve(newRequest);
+          }
+
+          return resolve(fallback);
         } catch (error) {
           return reject(error);
         }
@@ -33,6 +41,14 @@ export async function resolveMiddleware(request: Request, middlewares: any[]): P
     return new Promise(async (resolve: Resolve, reject: Reject) => {
       try {
         await current(next, resolve);
+
+        const fallback = await current(next);
+
+        if (!fallback) {
+          return resolve(next);
+        }
+
+        return resolve(fallback);
       } catch (error) {
         return reject(error);
       }

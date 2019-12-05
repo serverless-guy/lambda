@@ -6,6 +6,8 @@ import { addTimeStamp } from "./fakes/handlers/addTimeStamp.middleware";
 import { withError } from "./fakes/handlers/withError.middleware";
 import { checkBody } from "./fakes/handlers/checkBody.middleware";
 import { parseBody } from "./fakes/handlers/parseBody.middleware";
+import { fallbackNoReturn } from "./fakes/handlers/fallbackNoReturn.middleware";
+import { fallbackWithReturnOnly } from "./fakes/handlers/fallbackWithReturnOnly.middleware";
 import { ok } from "./fakes/handlers/ok.responser";
 import { faulty } from "./fakes/handlers/faulty.responser";
 import * as chai from "chai";
@@ -146,14 +148,14 @@ describe("wrapper", () => {
     expect(body.generatedAt).to.be.equal("2019-11-12");
   });
 
-  it("should resolve middleware without return value", async () => {
+  it("should resolve middlewares if next is not called (with return value)", async () => {
     const localEvent = { ...event };
     const handler = await wrapper(helloWorld);
 
     handler.pushMiddlewares(
       parseBody,
       addTimeStamp,
-      withError
+      fallbackWithReturnOnly
     );
 
     handler.setCatchTemplate(faulty);
@@ -164,6 +166,66 @@ describe("wrapper", () => {
 
     expect(response).to.haveOwnProperty("body");
     expect(response).to.haveOwnProperty("statusCode");
-    expect(response.statusCode).to.be.equal(500);
+    expect(response.statusCode).to.be.equal(200);
+  });
+
+  it("should resolve middlewares if next is not called (no return value)", async () => {
+    const localEvent = { ...event };
+    const handler = await wrapper(helloWorld);
+
+    handler.pushMiddlewares(
+      parseBody,
+      addTimeStamp,
+      fallbackNoReturn
+    );
+
+    handler.setCatchTemplate(faulty);
+
+    localEvent.body = JSON.stringify({ sampleValue1: "testing..." });
+
+    const response = await handler(localEvent, context);
+
+    expect(response).to.haveOwnProperty("body");
+    expect(response).to.haveOwnProperty("statusCode");
+    expect(response.statusCode).to.be.equal(200);
+  });
+
+
+  it("should resolve middleware if next is not called (with return value)", async () => {
+    const localEvent = { ...event };
+    const handler = await wrapper(helloWorld);
+
+    handler.pushMiddleware(
+      fallbackWithReturnOnly
+    );
+
+    handler.setCatchTemplate(faulty);
+
+    localEvent.body = JSON.stringify({ sampleValue1: "testing..." });
+
+    const response = await handler(localEvent, context);
+
+    expect(response).to.haveOwnProperty("body");
+    expect(response).to.haveOwnProperty("statusCode");
+    expect(response.statusCode).to.be.equal(200);
+  });
+
+  it("should resolve middleware if next is not called (no return value)", async () => {
+    const localEvent = { ...event };
+    const handler = await wrapper(helloWorld);
+
+    handler.pushMiddleware(
+      fallbackNoReturn
+    );
+
+    handler.setCatchTemplate(faulty);
+
+    localEvent.body = JSON.stringify({ sampleValue1: "testing..." });
+
+    const response = await handler(localEvent, context);
+
+    expect(response).to.haveOwnProperty("body");
+    expect(response).to.haveOwnProperty("statusCode");
+    expect(response.statusCode).to.be.equal(200);
   });
 });
