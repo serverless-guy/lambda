@@ -37,7 +37,7 @@ describe("wrapper", () => {
 
   it("should resolve handler with validation middleware (validation success)", async () => {
     const localEvent = { ...event };
-    const handler = await wrapper(validation);
+    const handler = wrapper(validation);
 
     handler.pushMiddleware(checkBody);
 
@@ -57,7 +57,7 @@ describe("wrapper", () => {
 
   it("should resolve handler with validation middleware (validation fail)", async () => {
     const localEvent = { ...event };
-    const handler = await wrapper(validation);
+    const handler = wrapper(validation);
 
     handler.pushMiddleware(checkBody);
 
@@ -77,7 +77,7 @@ describe("wrapper", () => {
 
   it("should use custom responser function", async () => {
     const localEvent = { ...event };
-    const handler = await wrapper(helloWorld);
+    const handler = wrapper(helloWorld);
 
     handler.setResponseTemplate(ok);
 
@@ -98,7 +98,7 @@ describe("wrapper", () => {
 
   it("should use custom error responser function", async () => {
     const localEvent = { ...event };
-    const handler = await wrapper(validation);
+    const handler = wrapper(validation);
 
     handler.pushMiddleware(checkBody);
     handler.setCatchTemplate(faulty);
@@ -121,7 +121,7 @@ describe("wrapper", () => {
 
   it("should chain middlewares", async () => {
     const localEvent = { ...event };
-    const handler = await wrapper(validation);
+    const handler = wrapper(validation);
 
     handler.pushMiddlewares(
       parseBody,
@@ -150,12 +150,12 @@ describe("wrapper", () => {
 
   it("should resolve middlewares if next is not called (with return value)", async () => {
     const localEvent = { ...event };
-    const handler = await wrapper(helloWorld);
+    const handler = wrapper(helloWorld);
 
     handler.pushMiddlewares(
       parseBody,
-      addTimeStamp,
-      fallbackWithReturnOnly
+      fallbackWithReturnOnly,
+      addTimeStamp
     );
 
     handler.setCatchTemplate(faulty);
@@ -171,12 +171,12 @@ describe("wrapper", () => {
 
   it("should resolve middlewares if next is not called (no return value)", async () => {
     const localEvent = { ...event };
-    const handler = await wrapper(helloWorld);
+    const handler = wrapper(helloWorld);
 
     handler.pushMiddlewares(
       parseBody,
-      addTimeStamp,
-      fallbackNoReturn
+      fallbackNoReturn,
+      addTimeStamp
     );
 
     handler.setCatchTemplate(faulty);
@@ -193,7 +193,7 @@ describe("wrapper", () => {
 
   it("should resolve middleware if next is not called (with return value)", async () => {
     const localEvent = { ...event };
-    const handler = await wrapper(helloWorld);
+    const handler = wrapper(helloWorld);
 
     handler.pushMiddleware(
       fallbackWithReturnOnly
@@ -212,7 +212,7 @@ describe("wrapper", () => {
 
   it("should resolve middleware if next is not called (no return value)", async () => {
     const localEvent = { ...event };
-    const handler = await wrapper(helloWorld);
+    const handler = wrapper(helloWorld);
 
     handler.pushMiddleware(
       fallbackNoReturn
