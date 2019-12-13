@@ -16,20 +16,24 @@ export async function resolveMiddleware(request: Request, middlewares: any[]): P
   }
 
   return middlewares.reduce(async (previousRequest, middleware) => {
-    return new Promise(async (resolve: Resolve, reject: Reject) => {
-      try {
-        await middleware(await previousRequest, resolve);
+    previousRequest = await previousRequest;
 
-        const fallback = await middleware(await previousRequest);
+    const newRequest = await new Promise((resolve) => {
+      middleware(previousRequest, resolve);
 
-        if (!fallback) {
-          return resolve(await previousRequest);
-        }
-
-        return resolve(await fallback);
-      } catch (error) {
-        return reject(error);
-      }
+      resolve();
     });
+
+    if (newRequest) {
+      return newRequest;
+    }
+
+    const fallback = await middleware(previousRequest);
+
+    if (!fallback) {
+      return previousRequest;
+    }
+
+    return fallback;
   }, originalRequest);
 }
