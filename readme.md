@@ -24,18 +24,21 @@ npm i --save @serverless-guy/lambda
 ```javascript
 import { wrapper } from "@serverless-guy/lambda";
 
-// your wrapper that returns the actual handler
 export const handler = wrapper(someHandler);
 
-// your handler
+/**
+ * Handler that is accepted by our lambda wrapper
+ * @param request.event Lambda's event object
+ * @param request.context Lambda's context object
+ * @param response handy function to return a response
+ * @return response
+ */
 function someHandler(request, response) {
-  // both event and context are located in request parameter
   const { event, context } = request;
 
   console.log(event);
   console.log(context);
 
-  // by default, response function stringifies your object
   return response(event);
 }
 ```
@@ -44,9 +47,15 @@ function someHandler(request, response) {
 ```javascript
 import { wrapper } from "@serverless-guy/lambda";
 
-// your wrapper that returns the actual handler
 export const handler = wrapper(someHandler);
 
+handler.pushMiddleware(checkBody);
+
+/**
+ * Function that parse object string to object
+ * @param body object string
+ * @return parsed object
+ */
 function parse(body) {
   if (!body) {
     return {}
@@ -55,7 +64,13 @@ function parse(body) {
   return JSON.parse(body);
 }
 
-// our middleware
+/**
+ * Middleware that is accepted by our lambda wrapper
+ * @param request.event Lambda's event object
+ * @param request.context Lambda's context object
+ * @param next middleware/handler next to this middleware
+ * @return next
+ */
 export function checkBody(request, next) {
   const { event } = request;
 
@@ -68,18 +83,20 @@ export function checkBody(request, next) {
   return next(request);
 }
 
-// add the middleware
-handler.pushMiddleware(checkBody);
 
-// your handler
+/**
+ * Handler that is accepted by our lambda wrapper
+ * @param request.event Lambda's event object
+ * @param request.context Lambda's context object
+ * @param response handy function to return a response
+ * @return response
+ */
 function someHandler(request, response) {
-  // both event and context are located in request parameter
   const { event, context } = request;
 
   const body = JSON.parse(event.body);
   console.log(context);
 
-  // by default, response function stringifies your object
   return response({ message: body.sampleValue1 });
 }
 ```  
@@ -89,13 +106,17 @@ function someHandler(request, response) {
 ```javascript
 import { wrapper } from "@serverless-guy/lambda";
 
-// your wrapper that returns the actual handler
 export const handler = wrapper(someHandler);
 
-// set the response template function
 handler.setResponseTemplate(customResponseTemplate);
 
-// your custom response template function
+/**
+ * Custom response function that is accepted by our lambda wrapper
+ * @param data object to be appended as response's body
+ * @param statusCode HTTP status code
+ * @param headers HTTP headers
+ * @return APIGatewayProxyResult
+ */
 function customResponseTemplate(data, statusCode = 200, headers = {}) {
     // do something
     data.returnedOn = new Date();
@@ -110,15 +131,19 @@ function customResponseTemplate(data, statusCode = 200, headers = {}) {
   };
 }
 
-// your handler
+/**
+ * Handler that is accepted by our lambda wrapper
+ * @param request.event Lambda's event object
+ * @param request.context Lambda's context object
+ * @param response handy function to return a response
+ * @return response
+ */
 function someHandler(request, response) {
-  // both event and context are located in request parameter
   const { event, context } = request;
 
   console.log(event);
   console.log(context);
 
-  // by default, response function stringifies your object
   return response(event);
 }
 ```
@@ -127,15 +152,18 @@ function someHandler(request, response) {
 ```javascript
 import { wrapper } from "@serverless-guy/lambda";
  
-// your wrapper that returns the actual handler
 export const handler = wrapper(someHandler);
 
-// set the response template function
 handler.setCatchTemplate(customCatchResponseTemplate);
 
-// your custom error response template function
-function customCatchResponseTemplate(error, responseFunction) {
-  // do something
+/**
+ * Custom error function that is accepted by our lambda wrapper
+ * @param error Error object
+ * @param request event and context
+ * @param responseFunction Response function
+ * @return APIGatewayProxyResult
+ */
+function customCatchResponseTemplate(error, request, responseFunction) {
   const errorResponseObject = {
     errorCode:    error.name,
     errorMessage: error.message
@@ -144,15 +172,19 @@ function customCatchResponseTemplate(error, responseFunction) {
   return response(errorResponseObject, 418); /** I'm a f***ing teapot */
 }
 
-// your handler
+/**
+ * Handler that is accepted by our lambda wrapper
+ * @param request.event Lambda's event object
+ * @param request.context Lambda's context object
+ * @param response handy function to return a response
+ * @return response
+ */
 function someHandler(request, response) {
-  // both event and context are located in request parameter
   const { event, context } = request;
 
   console.log(event);
   console.log(context);
 
-  // by default, response function stringifies your object
   return response(event);
 }
 ```

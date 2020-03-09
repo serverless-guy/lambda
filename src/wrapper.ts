@@ -37,7 +37,7 @@ function wrapper(handlerFn: Handler): Wrapper {
 
       return resolvedHandler;
     } catch (error) {
-      return wrapperProperties.errorResponseFunction(error, wrapperProperties.responseFunction);
+      return wrapperProperties.errorResponseFunction(error, request, wrapperProperties.responseFunction);
     }
   }
 

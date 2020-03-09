@@ -1,6 +1,6 @@
 {
   "name": "@serverless-guy/lambda",
-  "version": "2.2.17",
+  "version": "2.3.0",
   "description": "serverless lambda wrapper utility",
   "main": "dist/index.js",
   "scripts": {
@@ -26,18 +26,18 @@
   "license": "MIT",
   "devDependencies": {
     "@types/aws-lambda": "^8.10.41",
-    "@types/chai": "^4.2.7",
+    "@types/chai": "^4.2.10",
     "@types/chai-as-promised": "^7.1.2",
     "@types/mocha": "^5.2.7",
     "@types/node": "^13.5.1",
-    "@typescript-eslint/eslint-plugin": "^2.12.0",
+    "@typescript-eslint/eslint-plugin": "^2.22.0",
     "@typescript-eslint/parser": "^2.18.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "eslint": "^6.8.0",
     "mocha": "^7.0.1",
     "nyc": "^15.0.0",
-    "rimraf": "^3.0.0",
+    "rimraf": "^3.0.2",
     "rollup": "^2.0.2",
     "rollup-plugin-alias": "^2.2.0",
     "rollup-plugin-typescript": "^1.0.1",
@@ -45,7 +45,7 @@
     "rollup-plugin-uglify": "^6.0.4",
     "ts-node": "^8.6.2",
     "tslib": "^1.11.0",
-    "typescript": "^3.7.2"
+    "typescript": "^3.8.3"
   },
   "directories": {
     "test": "test"
