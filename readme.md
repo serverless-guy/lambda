@@ -6,8 +6,7 @@
 [![Downloads Stats][npm-downloads]][npm-url]
 [![Donate][paypal-image]](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=938FMCPPQG4DQ&currency_code=USD&source=url)
   
-AWS Lambda wrapper that allows you to write class based handlers.  
-  
+The only AWS Lambda wrapper that you will need!  
   
 # Installation  
   
@@ -19,8 +18,13 @@ npm i --save @serverless-guy/lambda
   
 # Usage  
   
+This wrapper will allow you to write lambda functions in easiest way possible.  
+  
+The wrapper would take a function and the function would have `Request` as first argument (containing both `event` and `context`) and `Response` as second argument (containing a function that transforms your response).
+  
 ## Basic Usage 
   
+In the example below, the handler would log the `event` first, then `context`. Afterwards, it will return the `event` as response.  
 ```javascript
 import { wrapper } from "@serverless-guy/lambda";
 
