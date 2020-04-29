@@ -1,4 +1,8 @@
 # @serverless-guy/lambda  
+  
+Lambda has never been easier!
+  
+## Status  
 [![Build Status][travis-image]][travis-url]
 [![codecov](https://codecov.io/gh/serverless-guy/lambda/branch/2.0/graph/badge.svg)](https://codecov.io/gh/serverless-guy/lambda)
 [![Bundle Size][bundlephobia]][bundlephobia-url]
@@ -12,9 +16,7 @@
 [![License][license]][npm-url]
 [![Donate][paypal-image]](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=938FMCPPQG4DQ&currency_code=USD&source=url)
   
-The only AWS Lambda wrapper that you will need!  
-  
-# Installation  
+## Installation  
   
 You can start by installing this library using the command below:  
   
@@ -22,13 +24,13 @@ You can start by installing this library using the command below:
 npm i --save @serverless-guy/lambda
 ```
   
-# Usage  
+## Usage  
   
 This wrapper will allow you to write lambda functions in easiest way possible.  
   
 The wrapper would take a function and the function would have `Request` as first argument (containing both `event` and `context`) and `Response` as second argument (containing a function that transforms your response).
   
-## Basic Usage 
+### Basic Usage 
   
 In the example below, the handler would log the `event` first, then `context`. Afterwards, it will return the `event` as response.  
 ```javascript
@@ -52,7 +54,7 @@ function someHandler(request, response) {
   return response(event);
 }
 ```
-## Using middleware  
+### Using middleware  
   
 ```javascript
 import { wrapper } from "@serverless-guy/lambda";
@@ -111,7 +113,7 @@ function someHandler(request, response) {
 }
 ```  
   
-## Using custom response function  
+### Using custom response function  
   
 ```javascript
 import { wrapper } from "@serverless-guy/lambda";
@@ -157,7 +159,7 @@ function someHandler(request, response) {
   return response(event);
 }
 ```
-## Using custom error response function  
+### Using custom error response function  
   
 ```javascript
 import { wrapper } from "@serverless-guy/lambda";
@@ -199,10 +201,10 @@ function someHandler(request, response) {
 }
 ```
   
-# Example  
+## Example  
   
 [@serverless-guy/app-example](https://github.com/serverless-guy/app-example) contains good example how `@serverless-guy/lambda` is used. Feel free to check it out.
-# Contributing
+## Contributing
   
 1. Fork it ([https://github.com/serverless-guy/lambda/fork](https://github.com/serverless-guy/lambda/fork))  
 2. Create your feature branch (git checkout -b feature/fooBar)  
