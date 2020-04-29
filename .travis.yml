@@ -3,23 +3,19 @@ matrix:
     - os: linux
       dist: trusty
       sudo: required
-    - os: osx
-      osx_image: xcode9.2
 language: node_js
 node_js:
   - lts/*
-before_script:
+before_install:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
-before_install:
   - npm i -g codecov
   - npm i -g npm@latest
 script:
   - npm run coverage
-after_script: 
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 after_success:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
   - nyc report --reporter=text-lcov > coverage.lcov && codecov
 git:
   depth: false

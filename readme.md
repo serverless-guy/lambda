@@ -1,9 +1,15 @@
 # @serverless-guy/lambda  
-[![codecov](https://codecov.io/gh/serverless-guy/lambda/branch/2.0/graph/badge.svg)](https://codecov.io/gh/serverless-guy/lambda)
 [![Build Status][travis-image]][travis-url]
-[![Greenkeeper badge][greenkeeper-image]](https://greenkeeper.io/)
+[![codecov](https://codecov.io/gh/serverless-guy/lambda/branch/2.0/graph/badge.svg)](https://codecov.io/gh/serverless-guy/lambda)
+[![Bundle Size][bundlephobia]][bundlephobia-url]
 [![NPM Version][npm-image]][npm-url]
 [![Downloads Stats][npm-downloads]][npm-url]
+[![Greenkeeper badge][greenkeeper-image]](https://greenkeeper.io/)
+[![Snyk][vulnerability]][vulnerability-url]
+[![CodeFactor](https://www.codefactor.io/repository/github/serverless-guy/lambda/badge)](https://www.codefactor.io/repository/github/serverless-guy/lambda)
+[![Debt][techdebt]][techdebt-url]
+[![Issues][issues]][issues-url]
+[![License][license]][npm-url]
 [![Donate][paypal-image]](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=938FMCPPQG4DQ&currency_code=USD&source=url)
   
 The only AWS Lambda wrapper that you will need!  
@@ -212,3 +218,12 @@ function someHandler(request, response) {
 [travis-url]: https://travis-ci.org/serverless-guy/lambda
 [greenkeeper-image]: https://badges.greenkeeper.io/serverless-guy/lambda.svg
 [paypal-image]: https://img.shields.io/badge/Donate-PayPal-green.svg
+[bundlephobia]: https://badgen.net/bundlephobia/minzip/@serverless-guy/lambda
+[bundlephobia-url]: https://bundlephobia.com/result?p=@serverless-guy/lambda@2.3.1
+[license]: https://img.shields.io/npm/l/@serverless-guy/lambda?color=blue
+[vulnerability]: https://img.shields.io/snyk/vulnerabilities/npm/@serverless-guy/lambda
+[vulnerability-url]: https://snyk.io/test/npm/@serverless-guy/lambda
+[techdebt]: https://img.shields.io/codeclimate/tech-debt/serverless-guy/lambda
+[techdebt-url]: https://codeclimate.com/github/serverless-guy/lambda/trends/technical_debt
+[issues]: https://img.shields.io/codeclimate/issues/serverless-guy/lambda
+[issues-url]: https://codeclimate.com/github/serverless-guy/lambda/issues
