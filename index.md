@@ -1,6 +1,6 @@
 ## Introduction
 
-[`@serverless-guy/lambda`](https://github.com/serverless-guy/lambda) is a small and humble AWS Lambda function wrapper that let's you write a much more cleaner, shorter lambda function in simpliest way possible.  
+[`@serverless-guy/lambda`](https://github.com/serverless-guy/lambda) is a small and humble AWS Lambda function wrapper that let's you write a much more cleaner, shorter lambda function in simplest way possible.  
 
 #### Who should use this?  
   
@@ -85,5 +85,15 @@ module.exports = wrapper(async (request, response) => {
 });
 ```  
   
-And that's it for the basic usage!
-
+And that's it for the basic usage!  
+  
+Check the pages below to get started.  
+  
+* [wrapper](/wrapper)  
+* [Request](/request)  
+* [Response](/response)  
+* [Middleware](/middleware)  
+* [Creating a custom response function](/custom-response-function)  
+* [Creating a custom error response function](/custom-error-response-function)  
+* [Error handling](/errors)  
+  
