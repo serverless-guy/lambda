@@ -1,12 +1,16 @@
-import typescript from 'rollup-plugin-typescript2'
-import { uglify } from 'rollup-plugin-uglify'
+import typescript from "rollup-plugin-typescript2"
+import { terser } from "rollup-plugin-terser"
 
 const base = {
   plugins: [
     typescript(),
-    uglify()
+    terser({
+      output: {
+        comments: false
+      }
+    })
   ]
-}
+};
 
 export default [
   Object.assign(
@@ -15,9 +19,9 @@ export default [
     {
       input: "src/wrapper.ts",
       output: {
-        format: 'cjs',
+        format: "cjs",
         file: "dist/index.js"
       }
     }
   )
-]
+];

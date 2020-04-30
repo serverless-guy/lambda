@@ -1,11 +1,12 @@
 # @serverless-guy/lambda  
   
-Lambda has never been easier!
+A small lambda wrapper that lets you write cleaner and maintainable lambda function
   
 ## Status  
 [![Build Status][travis-image]][travis-url]
 [![codecov](https://codecov.io/gh/serverless-guy/lambda/branch/2.0/graph/badge.svg)](https://codecov.io/gh/serverless-guy/lambda)
 [![Bundle Size][bundlephobia]][bundlephobia-url]
+[![install size](https://packagephobia.now.sh/badge?p=@serverless-guy/lambda@latest)](https://packagephobia.now.sh/result?p=@serverless-guy/lambda@latest)
 [![NPM Version][npm-image]][npm-url]
 [![Downloads Stats][npm-downloads]][npm-url]
 [![Snyk][vulnerability]][vulnerability-url]
@@ -200,17 +201,6 @@ function someHandler(request, response) {
 }
 ```
   
-## Example  
-  
-[@serverless-guy/app-example](https://github.com/serverless-guy/app-example) contains good example how `@serverless-guy/lambda` is used. Feel free to check it out.
-## Contributing
-  
-1. Fork it ([https://github.com/serverless-guy/lambda/fork](https://github.com/serverless-guy/lambda/fork))  
-2. Create your feature branch (git checkout -b feature/fooBar)  
-3. Commit your changes (git commit -am 'Add some fooBar')  
-4. Push to the branch (git push origin feature/fooBar)  
-5. Create a new Pull Request  
-  
 <!-- Markdown link & img dfn's -->
 [npm-image]: https://img.shields.io/npm/v/@serverless-guy/lambda.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/@serverless-guy/lambda
@@ -219,7 +209,7 @@ function someHandler(request, response) {
 [travis-url]: https://travis-ci.org/serverless-guy/lambda
 [paypal-image]: https://img.shields.io/badge/Donate-PayPal-green.svg
 [bundlephobia]: https://badgen.net/bundlephobia/minzip/@serverless-guy/lambda
-[bundlephobia-url]: https://bundlephobia.com/result?p=@serverless-guy/lambda@2.3.1
+[bundlephobia-url]: https://bundlephobia.com/result?p=@serverless-guy/lambda@latest
 [license]: https://img.shields.io/npm/l/@serverless-guy/lambda?color=blue
 [vulnerability]: https://img.shields.io/snyk/vulnerabilities/npm/@serverless-guy/lambda
 [vulnerability-url]: https://snyk.io/test/npm/@serverless-guy/lambda
