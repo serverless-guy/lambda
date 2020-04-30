@@ -13,6 +13,9 @@ A small lambda wrapper that lets you write cleaner and maintainable lambda funct
 [![CodeFactor](https://www.codefactor.io/repository/github/serverless-guy/lambda/badge)](https://www.codefactor.io/repository/github/serverless-guy/lambda)
 [![Debt][techdebt]][techdebt-url]
 [![Issues][issues]][issues-url]
+![David](https://img.shields.io/david/peer/serverless-guy/lambda)
+![David](https://img.shields.io/david/dev/serverless-guy/lambda)
+![Libraries.io SourceRank](https://img.shields.io/librariesio/sourcerank/npm/@serverless-guy/lambda)
 [![License][license]][npm-url]
 [![Donate][paypal-image]](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=938FMCPPQG4DQ&currency_code=USD&source=url)
   
@@ -24,13 +27,7 @@ You can start by installing this library using the command below:
 npm i --save @serverless-guy/lambda
 ```
   
-## Usage  
-  
-This wrapper will allow you to write lambda functions in easiest way possible.  
-  
-The wrapper would take a function and the function would have `Request` as first argument (containing both `event` and `context`) and `Response` as second argument (containing a function that transforms your response).
-  
-### Basic Usage 
+## Basic Usage 
   
 In the example below, the handler would log the `event` first, then `context`. Afterwards, it will return the `event` as response.  
 ```javascript
@@ -200,6 +197,8 @@ function someHandler(request, response) {
   return response(event);
 }
 ```
+  
+Check out our [documentation](https://serverless-guy.github.io/lambda) page to see more examples.
   
 <!-- Markdown link & img dfn's -->
 [npm-image]: https://img.shields.io/npm/v/@serverless-guy/lambda.svg?style=flat-square
