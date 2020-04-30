@@ -8,7 +8,6 @@ Lambda has never been easier!
 [![Bundle Size][bundlephobia]][bundlephobia-url]
 [![NPM Version][npm-image]][npm-url]
 [![Downloads Stats][npm-downloads]][npm-url]
-[![Greenkeeper badge][greenkeeper-image]](https://greenkeeper.io/)
 [![Snyk][vulnerability]][vulnerability-url]
 [![CodeFactor](https://www.codefactor.io/repository/github/serverless-guy/lambda/badge)](https://www.codefactor.io/repository/github/serverless-guy/lambda)
 [![Debt][techdebt]][techdebt-url]
@@ -218,7 +217,6 @@ function someHandler(request, response) {
 [npm-downloads]: https://img.shields.io/npm/dm/@serverless-guy/lambda.svg?style=flat-square
 [travis-image]: https://travis-ci.org/serverless-guy/lambda.svg?branch=2.0
 [travis-url]: https://travis-ci.org/serverless-guy/lambda
-[greenkeeper-image]: https://badges.greenkeeper.io/serverless-guy/lambda.svg
 [paypal-image]: https://img.shields.io/badge/Donate-PayPal-green.svg
 [bundlephobia]: https://badgen.net/bundlephobia/minzip/@serverless-guy/lambda
 [bundlephobia-url]: https://bundlephobia.com/result?p=@serverless-guy/lambda@2.3.1

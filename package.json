@@ -1,6 +1,6 @@
 {
   "name": "@serverless-guy/lambda",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "description": "serverless lambda wrapper utility",
   "main": "dist/index.js",
   "scripts": {
@@ -38,7 +38,7 @@
     "mocha": "^7.1.2",
     "nyc": "^15.0.1",
     "rimraf": "^3.0.2",
-    "rollup": "^2.0.3",
+    "rollup": "^2.7.5",
     "rollup-plugin-alias": "^2.2.0",
     "rollup-plugin-typescript": "^1.0.1",
     "rollup-plugin-typescript2": "^0.27.0",
