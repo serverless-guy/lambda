@@ -91,10 +91,5 @@ And that's it for the basic usage!
 Check the pages below to get started.  
   
 * [wrapper](/lambda/wrapper)  
-<!-- * [Request](/lambda/request)  
-* [Response](/lambda/response)  
-* [Middleware](/lambda/middleware)  
-* [Creating a custom response function](/lambda/custom-response-function)  
-* [Creating a custom error response function](/lambda/custom-error-response-function)  
-* [Error handling](/lambda/errors)   -->
+
   
