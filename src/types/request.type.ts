@@ -1,5 +1,5 @@
 import { Context } from "aws-lambda";
-import { Event } from "./event.type";
+import { Event } from "@lambda/types/event.type";
 
 export type Request = {
   /**

@@ -1,3 +1,3 @@
-import { Request } from "./request.type";
+import { Request } from "@lambda/types/request.type";
 
 export type Next = (request: Request) => never;

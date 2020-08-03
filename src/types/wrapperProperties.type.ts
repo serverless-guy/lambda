@@ -1,6 +1,6 @@
-import { Responser } from "./responser.type";
-import { ErrorResponser } from "./errorResponser.type";
-import { Middleware } from "./middleware.type";
+import { Responser } from "@lambda/types/responser.type";
+import { ErrorResponser } from "@lambda/types/errorResponser.type";
+import { Middleware } from "@lambda/types/middleware.type";
 
 export type WrapperProperties = {
   middlewares: NonNullable<Middleware[]>;

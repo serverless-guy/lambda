@@ -13,7 +13,7 @@ before_install:
   - npm i -g codecov
   - npm i -g npm@latest
 script:
-  - npm run coverage
+  - npm run test
 after_success:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
   - nyc report --reporter=text-lcov > coverage.lcov && codecov

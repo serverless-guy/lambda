@@ -1,7 +1,4 @@
-import { Request } from "./types/request.type";
-
-type Resolve = <T>(value?: T) => void;
-type Reject = <T>(reason?: T) => void;
+import { Request } from "@lambda/types/request.type";
 
 /**
  * Resolve middleware

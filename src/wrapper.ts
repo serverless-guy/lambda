@@ -1,15 +1,15 @@
-import { ErrorResponser } from "./types/errorResponser.type";
-import { Event } from "./types/event.type";
-import { Handler } from "./types/handler.type";
-import { Request } from "./types/request.type";
-import { Middleware } from "./types/middleware.type";
-import { Responser } from "./types/responser.type";
-import { Wrapper } from "./types/wrapper.type";
-import { WrapperProperties } from "./types/wrapperProperties.type";
-import { Next } from "./types/next.type";
-import { ok } from "./responses/http/ok";
-import { faulty } from "./responses/http/faulty";
-import { resolveMiddleware } from "./resolveMiddleware.utils";
+import { ErrorResponser } from "@lambda/types/errorResponser.type";
+import { Event } from "@lambda/types/event.type";
+import { Handler } from "@lambda/types/handler.type";
+import { Request } from "@lambda/types/request.type";
+import { Middleware } from "@lambda/types/middleware.type";
+import { Responser } from "@lambda/types/responser.type";
+import { Wrapper } from "@lambda/types/wrapper.type";
+import { WrapperProperties } from "@lambda/types/wrapperProperties.type";
+import { Next } from "@lambda/types/next.type";
+import { ok } from "@lambda/responses/http/ok";
+import { faulty } from "@lambda/responses/http/faulty";
+import { resolveMiddleware } from "@lambda/resolveMiddleware.utils";
 import { Context } from "aws-lambda";
 
 /**

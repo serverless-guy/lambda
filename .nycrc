@@ -1,12 +1,13 @@
 {
   "check-coverage": true,
-  "statements": 80,
-  "lines": 80,
+  "statements": 100,
+  "lines": 100,
   "extension": [
     ".ts"
   ],
   "require": [
-    "ts-node/register"
+    "ts-node/register",
+    "tsconfig-paths/register"
   ],
   "include": [
     "src/**/*.ts"

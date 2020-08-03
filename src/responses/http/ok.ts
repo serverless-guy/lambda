@@ -1,5 +1,5 @@
 import { APIGatewayProxyResult } from "aws-lambda";
-import { Headers } from "../../types/headers.type";
+import { Headers } from "@lambda/types/headers.type";
 
 /**
  * Default responser

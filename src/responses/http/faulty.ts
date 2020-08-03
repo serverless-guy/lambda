@@ -1,6 +1,6 @@
 import { APIGatewayProxyResult } from "aws-lambda";
-import { Responser } from "../../types/responser.type";
-import { Request } from "../../types/request.type";
+import { Responser } from "@lambda/types/responser.type";
+import { Request } from "@lambda/types/request.type";
 
 const HTTP_SERVER_ERROR = 500;
 
