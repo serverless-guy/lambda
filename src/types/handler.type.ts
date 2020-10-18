@@ -1,4 +1,5 @@
-import { Request } from "@lambda/types/request.type";
+import { Event } from "@lambda/types/event.type";
 import { Responser } from "@lambda/types/responser.type";
+import { Context } from "aws-lambda";
 
-export type Handler = (request: Request, response: Responser) => Promise<any>; // eslint-disable-line
+export type Handler = (event: Event, context: Context, response: Responser) => Promise<any>; // eslint-disable-line

@@ -1,6 +1,8 @@
 # @serverless-guy/lambda  
   
-A small lambda wrapper that lets you write cleaner and maintainable lambda function
+A small lambda wrapper that lets you write cleaner and maintainable lambda function  
+  
+Version 3.x focuses on removing stuffs that does not make sense and providing a little bit "lambda"-ish familiarity.
   
 ## Status  
 [![Build Status][travis-image]][travis-url]

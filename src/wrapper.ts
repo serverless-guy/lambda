@@ -1,83 +1,42 @@
-import { ErrorResponser } from "@lambda/types/errorResponser.type";
-import { Event } from "@lambda/types/event.type";
 import { Handler } from "@lambda/types/handler.type";
-import { Request } from "@lambda/types/request.type";
-import { Middleware } from "@lambda/types/middleware.type";
-import { Responser } from "@lambda/types/responser.type";
 import { Wrapper } from "@lambda/types/wrapper.type";
-import { WrapperProperties } from "@lambda/types/wrapperProperties.type";
-import { Next } from "@lambda/types/next.type";
-import { ok } from "@lambda/responses/http/ok";
-import { faulty } from "@lambda/responses/http/faulty";
-import { resolveMiddleware } from "@lambda/resolveMiddleware.utils";
+import { defaultCatch } from "@lambda/responses/defaultCatch";
+import { Event } from "@lambda/types/event.type";
 import { Context } from "aws-lambda";
-
-/**
- * Wraps a function that takes request (event, context)
- * and response (response template function) as argument
- * @param handlerFn customized handler function
- * @return Promise<Wrapper>
- */
-function wrapper(handlerFn: Handler): Wrapper {
-  const wrapperProperties: WrapperProperties = {
-    middlewares: [],
-    responseFunction: ok,
-    errorResponseFunction: faulty
+import { defaultResponse } from "@lambda/responses/defaultResponse";
+import { WrapperProperties } from "./types/wrapperProperties.type";
+import { Responser } from "./types/responser.type";
+import { ErrorResponser } from "./types/errorResponser.type";
+ 
+function wrapper(handler: Handler): Wrapper {
+  const props: WrapperProperties = {
+    responseFunction: defaultResponse,
+    catchFunction: defaultCatch
   };
 
-  const handler: Wrapper = async (event: Event, context: Context) => {
-    const request: Request = {
-      event: { ...event },
-      context: { ...context }
-    }
-
+  const actualHandler: Wrapper = async (event: Event, context: Context) => {
     try {
-      const newRequest = await resolveMiddleware(request, wrapperProperties.middlewares);
-      const resolvedHandler = await handlerFn(newRequest, wrapperProperties.responseFunction);
+      const resolved = await handler(event, context, props.responseFunction);
 
-      return resolvedHandler;
+      return resolved;
     } catch (error) {
-      return wrapperProperties.errorResponseFunction(error, request, wrapperProperties.responseFunction);
+      return props.catchFunction(error, event, context, props.responseFunction);
     }
-  }
+  };
 
-  handler.setResponseTemplate = (fn: Responser): Wrapper => {
-    wrapperProperties.responseFunction = fn;
-
-    return this;
-  }
-
-  handler.setCatchTemplate = (fn: ErrorResponser): Wrapper => {
-    wrapperProperties.errorResponseFunction = fn;
+  const setPropsFunction = (fn: Responser, propName: string): Wrapper => {
+    props[propName] = fn;
 
     return this;
-  }
+  } 
 
-  handler.pushMiddleware = (middleware: Middleware): Wrapper => {
-    wrapperProperties.middlewares.push(middleware);
+  actualHandler.setResponseFunction = (fn: ErrorResponser): Wrapper => setPropsFunction(fn, "responseFunction");
 
-    return this;
-  }
+  actualHandler.setCatchFunction = (fn: ErrorResponser): Wrapper => setPropsFunction(fn, "catchFunction");
 
-  handler.pushMiddlewares = (...middlewares: Middleware[]): Wrapper => {
-    middlewares.forEach((middleware: Middleware) => {
-      handler.pushMiddleware(middleware);
-    });
-
-    return this;
-  }
-
-  return handler;
+  return actualHandler;
 }
 
 export {
-  wrapper,
-  Responser,
-  Request,
-  Handler,
-  Wrapper,
-  WrapperProperties,
-  ErrorResponser,
-  Next,
-  Middleware
-};
+  wrapper
+}

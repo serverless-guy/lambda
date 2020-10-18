@@ -1,6 +1,6 @@
-import { APIGatewayProxyResult } from "aws-lambda";
+
+import { APIGatewayProxyResult, APIGatewayEvent, Context } from "aws-lambda";
 import { Responser } from "@lambda/types/responser.type";
-import { Request } from "@lambda/types/request.type";
 
 const HTTP_SERVER_ERROR = 500;
 
@@ -10,7 +10,7 @@ const HTTP_SERVER_ERROR = 500;
  * @param response ResponseFunction
  * @return APIGatewayProxyResult
  */
-export function faulty(error: Error, request: Request, response: Responser): APIGatewayProxyResult {
+export function defaultCatch(error: Error, event: APIGatewayEvent, context: Context, response: Responser): APIGatewayProxyResult {
   const errorResponseObject = {
     errorCode:    error.name,
     errorMessage: error.message
