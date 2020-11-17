@@ -2,12 +2,6 @@ import { context } from "./fakes/context";
 import { event } from "./fakes/event";
 import { helloWorld } from "./fakes/handlers/helloWorld.handler";
 import { validation } from "./fakes/handlers/validation.handler";
-import { addTimeStamp } from "./fakes/handlers/addTimeStamp.middleware";
-import { withError } from "./fakes/handlers/withError.middleware";
-import { checkBody } from "./fakes/handlers/checkBody.middleware";
-import { parseBody } from "./fakes/handlers/parseBody.middleware";
-import { fallbackNoReturn } from "./fakes/handlers/fallbackNoReturn.middleware";
-import { fallbackWithReturnOnly } from "./fakes/handlers/fallbackWithReturnOnly.middleware";
 import { ok } from "./fakes/handlers/ok.responser";
 import { faulty } from "./fakes/handlers/faulty.responser";
 import * as chai from "chai";
@@ -35,51 +29,11 @@ describe("wrapper", () => {
     expect(body.user).to.be.equal("anonymouse");
   });
 
-  it("should resolve handler with validation middleware (validation success)", async () => {
-    const localEvent = { ...event };
-    const handler = wrapper(validation);
-
-    handler.pushMiddleware(checkBody);
-
-    localEvent.body = JSON.stringify({ sampleValue1: "testing..." });
-
-    const response = await handler(localEvent, context);
-
-    expect(response).to.haveOwnProperty("body");
-
-    const body = JSON.parse(response.body);
-
-    expect(body).to.haveOwnProperty("message");
-    expect(body).to.haveOwnProperty("user");
-    expect(body.message).to.be.equal("testing...");
-    expect(body.user).to.be.equal("anonymouse");
-  });
-
-  it("should resolve handler with validation middleware (validation fail)", async () => {
-    const localEvent = { ...event };
-    const handler = wrapper(validation);
-
-    handler.pushMiddleware(checkBody);
-
-    const response = await handler(localEvent, context);
-
-    expect(response).to.haveOwnProperty("body");
-    expect(response).to.haveOwnProperty("statusCode");
-    expect(response.statusCode).to.be.equal(500);
-
-    const body = JSON.parse(response.body);
-
-    expect(body).to.haveOwnProperty("errorCode");
-    expect(body).to.haveOwnProperty("errorMessage");
-    expect(body.errorCode).to.be.equal("Error");
-    expect(body.errorMessage).to.be.equal("Validation Failed");
-  });
-
   it("should use custom responser function", async () => {
     const localEvent = { ...event };
     const handler = wrapper(helloWorld);
 
-    handler.setResponseTemplate(ok);
+    handler.setResponseFunction(ok);
 
     const response = await handler(localEvent, context);
 
@@ -96,12 +50,33 @@ describe("wrapper", () => {
     expect(body.user).to.be.equal("anonymouse");
   });
 
+  it("should use default error responser function", async () => {
+    const localEvent = { ...event };
+    const handler = wrapper(validation);
+
+    localEvent.body = "{}";
+
+    const response = await handler(localEvent, context);
+
+    expect(response).to.haveOwnProperty("body");
+    expect(response).to.haveOwnProperty("statusCode");
+    expect(response.statusCode).to.be.equal(500);
+
+    const body = JSON.parse(response.body);
+
+    expect(body).to.haveOwnProperty("errorCode");
+    expect(body).to.haveOwnProperty("errorMessage");
+    expect(body.errorCode).to.be.equal("Error");
+    expect(body.errorMessage).to.be.equal("Validation Failed");
+  });
+
   it("should use custom error responser function", async () => {
     const localEvent = { ...event };
     const handler = wrapper(validation);
 
-    handler.pushMiddleware(checkBody);
-    handler.setCatchTemplate(faulty);
+    handler.setCatchFunction(faulty);
+
+    localEvent.body = "{}";
 
     const response = await handler(localEvent, context);
 
@@ -117,115 +92,5 @@ describe("wrapper", () => {
     expect(body.customError).to.be.true;
     expect(body.errorCode).to.be.equal("Error");
     expect(body.errorMessage).to.be.equal("Validation Failed");
-  });
-
-  it("should chain middlewares", async () => {
-    const localEvent = { ...event };
-    const handler = wrapper(validation);
-
-    handler.pushMiddlewares(
-      parseBody,
-      addTimeStamp
-    );
-
-    handler.setCatchTemplate(faulty);
-
-    localEvent.body = JSON.stringify({ sampleValue1: "testing..." });
-
-    const response = await handler(localEvent, context);
-
-    expect(response).to.haveOwnProperty("body");
-    expect(response).to.haveOwnProperty("statusCode");
-    expect(response.statusCode).to.be.equal(200);
-
-    const body = JSON.parse(response.body);
-
-    expect(body).to.haveOwnProperty("generatedAt");
-    expect(body).to.haveOwnProperty("message");
-    expect(body).to.haveOwnProperty("user");
-    expect(body.message).to.be.equal("testing...");
-    expect(body.user).to.be.equal("anonymouse");
-    expect(body.generatedAt).to.be.equal("2019-11-12");
-  });
-
-  it("should resolve middlewares if next is not called (with return value)", async () => {
-    const localEvent = { ...event };
-    const handler = wrapper(helloWorld);
-
-    handler.pushMiddlewares(
-      parseBody,
-      fallbackWithReturnOnly,
-      addTimeStamp
-    );
-
-    handler.setCatchTemplate(faulty);
-
-    localEvent.body = JSON.stringify({ sampleValue1: "testing..." });
-
-    const response = await handler(localEvent, context);
-
-    expect(response).to.haveOwnProperty("body");
-    expect(response).to.haveOwnProperty("statusCode");
-    expect(response.statusCode).to.be.equal(200);
-  });
-
-  it("should resolve middlewares if next is not called (no return value)", async () => {
-    const localEvent = { ...event };
-    const handler = wrapper(helloWorld);
-
-    handler.pushMiddlewares(
-      parseBody,
-      fallbackNoReturn,
-      addTimeStamp
-    );
-
-    handler.setCatchTemplate(faulty);
-
-    localEvent.body = JSON.stringify({ sampleValue1: "testing..." });
-
-    const response = await handler(localEvent, context);
-
-    expect(response).to.haveOwnProperty("body");
-    expect(response).to.haveOwnProperty("statusCode");
-    expect(response.statusCode).to.be.equal(200);
-  });
-
-
-  it("should resolve middleware if next is not called (with return value)", async () => {
-    const localEvent = { ...event };
-    const handler = wrapper(helloWorld);
-
-    handler.pushMiddleware(
-      fallbackWithReturnOnly
-    );
-
-    handler.setCatchTemplate(faulty);
-
-    localEvent.body = JSON.stringify({ sampleValue1: "testing..." });
-
-    const response = await handler(localEvent, context);
-
-    expect(response).to.haveOwnProperty("body");
-    expect(response).to.haveOwnProperty("statusCode");
-    expect(response.statusCode).to.be.equal(200);
-  });
-
-  it("should resolve middleware if next is not called (no return value)", async () => {
-    const localEvent = { ...event };
-    const handler = wrapper(helloWorld);
-
-    handler.pushMiddleware(
-      fallbackNoReturn
-    );
-
-    handler.setCatchTemplate(faulty);
-
-    localEvent.body = JSON.stringify({ sampleValue1: "testing..." });
-
-    const response = await handler(localEvent, context);
-
-    expect(response).to.haveOwnProperty("body");
-    expect(response).to.haveOwnProperty("statusCode");
-    expect(response.statusCode).to.be.equal(200);
   });
 });

@@ -4,7 +4,7 @@
   "prettier.printWidth": 120,
   "editor.insertSpaces": true,
   "files.eol": "\n",
-  "window.zoomLevel": 0,
+  "window.zoomLevel": 1,
   "eslint.validate": [
     "javascript",
     "typescript"

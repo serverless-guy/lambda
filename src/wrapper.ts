@@ -7,7 +7,7 @@ import { defaultResponse } from "@lambda/responses/defaultResponse";
 import { WrapperProperties } from "./types/wrapperProperties.type";
 import { Responser } from "./types/responser.type";
 import { ErrorResponser } from "./types/errorResponser.type";
- 
+
 function wrapper(handler: Handler): Wrapper {
   const props: WrapperProperties = {
     responseFunction: defaultResponse,
@@ -20,7 +20,9 @@ function wrapper(handler: Handler): Wrapper {
 
       return resolved;
     } catch (error) {
-      return props.catchFunction(error, event, context, props.responseFunction);
+      const catchResponse = await props.catchFunction(error, event, context, props.responseFunction);
+
+      return catchResponse;
     }
   };
 
@@ -28,7 +30,7 @@ function wrapper(handler: Handler): Wrapper {
     props[propName] = fn;
 
     return this;
-  } 
+  }
 
   actualHandler.setResponseFunction = (fn: ErrorResponser): Wrapper => setPropsFunction(fn, "responseFunction");
 

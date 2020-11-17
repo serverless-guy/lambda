@@ -6,6 +6,7 @@ const base = {
   plugins: [
     transpile(),
     alias({
+      resolve: [],
       entries: {
         "@lambda": "./src"
       }
