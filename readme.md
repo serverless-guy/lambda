@@ -6,7 +6,6 @@ Version 3.x focuses on removing stuffs that does not make sense and providing a 
   
 ## Status  
 [![Build Status][travis-image]][travis-url]
-[![codecov](https://codecov.io/gh/serverless-guy/lambda/branch/2.0/graph/badge.svg)](https://codecov.io/gh/serverless-guy/lambda)
 [![Bundle Size][bundlephobia]][bundlephobia-url]
 [![install size](https://packagephobia.now.sh/badge?p=@serverless-guy/lambda@latest)](https://packagephobia.now.sh/result?p=@serverless-guy/lambda@latest)
 [![NPM Version][npm-image]][npm-url]
@@ -15,8 +14,6 @@ Version 3.x focuses on removing stuffs that does not make sense and providing a 
 [![CodeFactor](https://www.codefactor.io/repository/github/serverless-guy/lambda/badge)](https://www.codefactor.io/repository/github/serverless-guy/lambda)
 [![Debt][techdebt]][techdebt-url]
 [![Issues][issues]][issues-url]
-![David](https://img.shields.io/david/peer/serverless-guy/lambda)
-![David](https://img.shields.io/david/dev/serverless-guy/lambda)
 ![Libraries.io SourceRank](https://img.shields.io/librariesio/sourcerank/npm/@serverless-guy/lambda)
 [![License][license]][npm-url]
 [![Donate][paypal-image]](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=938FMCPPQG4DQ&currency_code=USD&source=url)
@@ -35,99 +32,29 @@ In the example below, the handler would log the `event` first, then `context`. A
 ```javascript
 import { wrapper } from "@serverless-guy/lambda";
 
-export const handler = wrapper(someHandler);
-
-/**
- * Handler that is accepted by our lambda wrapper
- * @param request.event Lambda's event object
- * @param request.context Lambda's context object
- * @param response handy function to return a response
- * @return response
- */
-function someHandler(request, response) {
-  const { event, context } = request;
+export const handler = wrapper(function someHandler(event, context, response) {
 
   console.log(event);
   console.log(context);
 
   return response(event);
-}
+});
 ```
-### Using middleware  
-  
-```javascript
-import { wrapper } from "@serverless-guy/lambda";
-
-export const handler = wrapper(someHandler);
-
-handler.pushMiddleware(checkBody);
-
-/**
- * Function that parse object string to object
- * @param body object string
- * @return parsed object
- */
-function parse(body) {
-  if (!body) {
-    return {}
-  }
-
-  return JSON.parse(body);
-}
-
-/**
- * Middleware that is accepted by our lambda wrapper
- * @param request.event Lambda's event object
- * @param request.context Lambda's context object
- * @param next middleware/handler next to this middleware
- * @return next
- */
-export function checkBody(request, next) {
-  const { event } = request;
-
-  const body = parse(event.body);
-
-  if (!body.sampleValue1) {
-    throw new Error("Validation Failed");
-  }
-
-  return next(request);
-}
-
-
-/**
- * Handler that is accepted by our lambda wrapper
- * @param request.event Lambda's event object
- * @param request.context Lambda's context object
- * @param response handy function to return a response
- * @return response
- */
-function someHandler(request, response) {
-  const { event, context } = request;
-
-  const body = JSON.parse(event.body);
-  console.log(context);
-
-  return response({ message: body.sampleValue1 });
-}
-```  
   
 ### Using custom response function  
   
 ```javascript
 import { wrapper } from "@serverless-guy/lambda";
 
-export const handler = wrapper(someHandler);
+export const handler = wrapper(function someHandler(event, context, response) {
+  console.log(event);
+  console.log(context);
 
-handler.setResponseTemplate(customResponseTemplate);
+  return response(event);
+});
 
-/**
- * Custom response function that is accepted by our lambda wrapper
- * @param data object to be appended as response's body
- * @param statusCode HTTP status code
- * @param headers HTTP headers
- * @return APIGatewayProxyResult
- */
+handler.setResponseFunction(customResponseTemplate);
+
 function customResponseTemplate(data, statusCode = 200, headers = {}) {
     // do something
     data.returnedOn = new Date();
@@ -142,39 +69,22 @@ function customResponseTemplate(data, statusCode = 200, headers = {}) {
   };
 }
 
-/**
- * Handler that is accepted by our lambda wrapper
- * @param request.event Lambda's event object
- * @param request.context Lambda's context object
- * @param response handy function to return a response
- * @return response
- */
-function someHandler(request, response) {
-  const { event, context } = request;
-
-  console.log(event);
-  console.log(context);
-
-  return response(event);
-}
 ```
 ### Using custom error response function  
   
 ```javascript
 import { wrapper } from "@serverless-guy/lambda";
  
-export const handler = wrapper(someHandler);
+export const handler = wrapper(function someHandler(event, context, response) {
+  console.log(event);
+  console.log(context);
 
-handler.setCatchTemplate(customCatchResponseTemplate);
+  return response(event);
+});
 
-/**
- * Custom error function that is accepted by our lambda wrapper
- * @param error Error object
- * @param request event and context
- * @param responseFunction Response function
- * @return APIGatewayProxyResult
- */
-function customCatchResponseTemplate(error, request, responseFunction) {
+handler.setCatchFunction(customCatchResponseTemplate);
+
+function customCatchResponseTemplate(error, event, context, responseFunction) {
   const errorResponseObject = {
     errorCode:    error.name,
     errorMessage: error.message
@@ -183,21 +93,6 @@ function customCatchResponseTemplate(error, request, responseFunction) {
   return response(errorResponseObject, 418); /** I'm a f***ing teapot */
 }
 
-/**
- * Handler that is accepted by our lambda wrapper
- * @param request.event Lambda's event object
- * @param request.context Lambda's context object
- * @param response handy function to return a response
- * @return response
- */
-function someHandler(request, response) {
-  const { event, context } = request;
-
-  console.log(event);
-  console.log(context);
-
-  return response(event);
-}
 ```
   
 Check out our [documentation](https://serverless-guy.github.io/lambda) page to see more examples.
